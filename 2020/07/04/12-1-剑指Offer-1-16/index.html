@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"alexljs.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1、 1234567891011121314151617181920212223242526272829303132package Offer;public class FindInMatrix_1 &amp;#123;    &#x2F;**     * 第一题 ：     *     * 在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，     * 每一列都按照从上到">
+<meta property="og:type" content="article">
+<meta property="og:title" content="12.1 剑指Offer 1-16">
+<meta property="og:url" content="http://alexljs.com/2020/07/04/12-1-%E5%89%91%E6%8C%87Offer-1-16/index.html">
+<meta property="og:site_name" content="AlexPub_2020">
+<meta property="og:description" content="1、 1234567891011121314151617181920212223242526272829303132package Offer;public class FindInMatrix_1 &amp;#123;    &#x2F;**     * 第一题 ：     *     * 在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，     * 每一列都按照从上到">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/15578361-b87503403d62f430.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2020-07-04T04:00:08.000Z">
+<meta property="article:modified_time" content="2020-07-04T04:54:57.550Z">
+<meta property="article:author" content="AlexLJS">
+<meta property="article:tag" content="offer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/15578361-b87503403d62f430.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+<link rel="canonical" href="http://alexljs.com/2020/07/04/12-1-%E5%89%91%E6%8C%87Offer-1-16/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>12.1 剑指Offer 1-16 | AlexPub_2020</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexPub_2020</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">个人博客，用于分享前后端各种技术知识、学习笔记，如有问题请联系：alexljs@outlook.com</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/07/04/12-1-%E5%89%91%E6%8C%87Offer-1-16/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AlexLJS">
+      <meta itemprop="description" content="个人博客，用于分享Java、Vue、MySQL学习笔记和其他技术相关知识。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexPub_2020">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          12.1 剑指Offer 1-16
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-07-04 12:00:08 / 修改时间：12:54:57" itemprop="dateCreated datePublished" datetime="2020-07-04T12:00:08+08:00">2020-07-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/04/12-1-%E5%89%91%E6%8C%87Offer-1-16/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/04/12-1-%E5%89%91%E6%8C%87Offer-1-16/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://upload-images.jianshu.io/upload_images/15578361-b87503403d62f430.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="题目.png"></p>
+<p>1、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">package Offer;</span><br><span class="line"></span><br><span class="line">public class FindInMatrix_1 &#123;</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 第一题 ：</span><br><span class="line">     *</span><br><span class="line">     * 在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，</span><br><span class="line">     * 每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，</span><br><span class="line">     * 判断数组中是否含有该整数。</span><br><span class="line">     *</span><br><span class="line">     * 思路 ：</span><br><span class="line">     *</span><br><span class="line">     * 左上角开始向下搜寻</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public boolean Find(int target, int [][] array) &#123;</span><br><span class="line">        int i &#x3D; 0;</span><br><span class="line">        int j &#x3D; array[i].length - 1;</span><br><span class="line"></span><br><span class="line">        while(i &lt; array.length &amp;&amp; j &gt;&#x3D; 0)&#123;</span><br><span class="line">            if (array[i][j] &#x3D;&#x3D; target) &#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;else if(array[i][j] &lt; target)&#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p>2、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">package Offer;</span><br><span class="line"></span><br><span class="line">public class ReplaceSpace_2 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 第二题 ：</span><br><span class="line">     *</span><br><span class="line">     * 请实现一个函数，将一个字符串中的每个空格替换成“%20”。</span><br><span class="line">     * 例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     *         return str.toString().replaceAll(&quot; &quot;, &quot;%20&quot;);</span><br><span class="line">     *</span><br><span class="line">     * 如果不用以上api ， 本题 从后往前复制和从前往后没啥区别</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public String replaceSpace(StringBuffer str) &#123;</span><br><span class="line">        int spaceCount &#x3D; 0;</span><br><span class="line">        for (int i &#x3D; 0; i &lt; str.length(); i++) &#123;</span><br><span class="line">            if (str.charAt(i) &#x3D;&#x3D; &#39; &#39;) spaceCount++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (spaceCount &#x3D;&#x3D; 0) return str.toString();</span><br><span class="line">        String old &#x3D; new String(str);</span><br><span class="line">        str.setLength(str.length() + 2*spaceCount);</span><br><span class="line"></span><br><span class="line">        int indexOld &#x3D; old.length() - 1;</span><br><span class="line">        for (int i &#x3D; str.length() - 1; i &gt; 0 ; ) &#123;</span><br><span class="line">            if (old.charAt(indexOld) &#x3D;&#x3D; &#39; &#39;)&#123;</span><br><span class="line">                str.setCharAt(i--,&#39;0&#39;);</span><br><span class="line">                str.setCharAt(i--,&#39;2&#39;);</span><br><span class="line">                str.setCharAt(i--,&#39;%&#39;);</span><br><span class="line">                indexOld--;</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                str.setCharAt( i--, old.charAt(indexOld--));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return str.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">package Offer;</span><br><span class="line"></span><br><span class="line">import Utils.ListNode;</span><br><span class="line"></span><br><span class="line">import java.util.ArrayList;</span><br><span class="line"></span><br><span class="line">public class PrintListFromTailToHead_3 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 输入一个链表，按链表从尾到头的顺序返回一个ArrayList。</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     *</span><br><span class="line">     * 这是一个stack的考题，使用递归依然会有jvm压栈的空间浪费。</span><br><span class="line">     * 给两个答案 ： 1、 反转链表 2、 递归</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public ArrayList&lt;Integer&gt; printListFromTailToHead(ListNode listNode) &#123;</span><br><span class="line">        ArrayList&lt;Integer&gt; res &#x3D; new ArrayList&lt;&gt;();</span><br><span class="line">        ListNode head &#x3D; reverse(listNode);</span><br><span class="line">        while (head !&#x3D; null)&#123;</span><br><span class="line">            res.add(head.val);</span><br><span class="line">            head &#x3D; head.next;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;process(listNode, res);&#x2F;&#x2F;递归</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">    public ListNode reverse(ListNode head)&#123;</span><br><span class="line">        ListNode pre &#x3D; null;</span><br><span class="line">        ListNode next ;</span><br><span class="line"></span><br><span class="line">        while (head !&#x3D; null)&#123;</span><br><span class="line">            next &#x3D; head.next;</span><br><span class="line">            head.next &#x3D; pre;</span><br><span class="line">            pre &#x3D; head;</span><br><span class="line">            head &#x3D; next;</span><br><span class="line">        &#125;</span><br><span class="line">        return pre;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void process(ListNode head, ArrayList&lt;Integer&gt; res)&#123;</span><br><span class="line">        if (head &#x3D;&#x3D; null) return;</span><br><span class="line">        process(head.next,res);</span><br><span class="line">        res.add(head.val);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">package Offer;</span><br><span class="line"></span><br><span class="line">import Utils.TreeNode;</span><br><span class="line"></span><br><span class="line">import java.util.Arrays;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class ReConstructBinaryTree_4 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。</span><br><span class="line">     * 假设输入的前序遍历和中序遍历的结果中都不含重复的数字。</span><br><span class="line">     * 例如输入前序遍历序列&#123;1,2,4,7,3,5,6,8&#125;和中序遍历序列&#123;4,7,2,1,5,3,8,6&#125;，</span><br><span class="line">     * 则重建二叉树并返回。</span><br><span class="line">     *</span><br><span class="line">     *</span><br><span class="line">     * 思路 ：</span><br><span class="line">     *</span><br><span class="line">     * 重构二叉树的经典题 ， 核心在于前序遍历确定了根节点的位置，</span><br><span class="line">     * 中序遍历确定了左右子树的长度</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    public TreeNode reConstructBinaryTree(int [] pre, int [] in) &#123;</span><br><span class="line">        Map&lt;Integer, Integer&gt; map &#x3D; new HashMap&lt;&gt;();</span><br><span class="line">        for (int i &#x3D; 0; i &lt; in.length; i++) &#123;</span><br><span class="line">            map.put(in[i], i);</span><br><span class="line">        &#125;</span><br><span class="line">        return process(pre,in,0,pre.length-1,0,in.length-1,map);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public TreeNode process(int[] pre, int[] in,int pleft, int pright, int ileft, int iright, Map&lt;Integer,Integer&gt; map)&#123;</span><br><span class="line">        if (pleft &gt; pright) return null;</span><br><span class="line"></span><br><span class="line">        TreeNode res &#x3D; new TreeNode(pre[pleft]);</span><br><span class="line">        int index &#x3D; map.get(pre[pleft]);</span><br><span class="line">        res.left &#x3D; process(pre,in,pleft+1,pleft+index-ileft,ileft,index-1,map);</span><br><span class="line">        res.right &#x3D; process(pre,in,pleft+index-ileft+1,pright,index+1,iright,map);</span><br><span class="line"></span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>5、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">package Offer;</span><br><span class="line"></span><br><span class="line">import java.util.Stack;</span><br><span class="line"></span><br><span class="line">public class TwoStackCreateQueue_5 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。</span><br><span class="line">     *</span><br><span class="line">     * 思路 ：</span><br><span class="line">     *</span><br><span class="line">     * 一个负责进， 一个负责出</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    Stack&lt;Integer&gt; stack1 &#x3D; new Stack&lt;Integer&gt;();</span><br><span class="line">    Stack&lt;Integer&gt; stack2 &#x3D; new Stack&lt;Integer&gt;();</span><br><span class="line"></span><br><span class="line">    public void push(int node) &#123;</span><br><span class="line">        while (!stack2.isEmpty())&#123;</span><br><span class="line">            stack1.push(stack2.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        stack1.push(node);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int pop() &#123;</span><br><span class="line">        while (!stack1.isEmpty())&#123;</span><br><span class="line">            stack2.push(stack1.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        return stack2.pop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>6、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">package Offer;</span><br><span class="line"></span><br><span class="line">public class MinNumberInRotateArray_6 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。</span><br><span class="line">     * 输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。</span><br><span class="line">     * 例如数组&#123;3,4,5,1,2&#125;为&#123;1,2,3,4,5&#125;的一个旋转，该数组的最小值为1。</span><br><span class="line">     * NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     *</span><br><span class="line">     *  这是一道二分题， 转折点所在区间端点必然不能保证 大小顺序。</span><br><span class="line">     *  而且 二分很复杂，</span><br><span class="line">     *  情况1： [441111] mid 与 right 相等， 分界点在哪？</span><br><span class="line">     *  情况2： [46]  mid-1 越界</span><br><span class="line">     *  （这题笔试推荐直接遍历）</span><br><span class="line">     *</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    public int minNumberInRotateArray(int [] array) &#123;</span><br><span class="line">        int left &#x3D; 0;</span><br><span class="line">        int right &#x3D; array.length - 1;</span><br><span class="line"></span><br><span class="line">        while(left &lt; right)&#123;</span><br><span class="line">            int mid &#x3D; left + (right - left)&#x2F;2;</span><br><span class="line">            if (array[mid] &gt; array[right])&#123;</span><br><span class="line">                left &#x3D; mid+1;</span><br><span class="line">            &#125;else if (array[mid] &#x3D;&#x3D; array[right])&#123;</span><br><span class="line">                right-&#x3D;1;&#x2F;&#x2F;[441111]</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                right &#x3D; mid;&#x2F;&#x2F;[46]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return array[left];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>7、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">package Offer;</span><br><span class="line"></span><br><span class="line">public class Fibonacci_7 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 大家都知道斐波那契数列，现在要求输入一个整数n，</span><br><span class="line">     * 请你输出斐波那契数列的第n项（从0开始，第0项为0，第1项是1）。</span><br><span class="line">     * n&lt;&#x3D;39</span><br><span class="line">     *</span><br><span class="line">     * 0 1 1 2 3 5 8 13...</span><br><span class="line">     *</span><br><span class="line">     * 思路 ：</span><br><span class="line">     *</span><br><span class="line">     * 斐波那契数列 不多说了 ， 最简单的Dp 。</span><br><span class="line">     * 注意 ： 优化空间复杂度</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public int fibonacci(int n) &#123;</span><br><span class="line">        int[] dp &#x3D; new int[2];</span><br><span class="line">        dp[0] &#x3D; 0;</span><br><span class="line">        dp[1] &#x3D; 1;</span><br><span class="line">        if (n &#x3D;&#x3D; 0) return 0;</span><br><span class="line">        for (int i &#x3D; 2; i &lt; n+1 ; i++) &#123;</span><br><span class="line">            int temp &#x3D; dp[0] + dp[1];</span><br><span class="line">            dp[0] &#x3D; dp[1];</span><br><span class="line">            dp[1] &#x3D; temp;</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F;未优化dp</span><br><span class="line">&#x2F;&#x2F;        int[] dp &#x3D; new int[n+1];</span><br><span class="line">&#x2F;&#x2F;        dp[0] &#x3D; 0;</span><br><span class="line">&#x2F;&#x2F;        dp[1] &#x3D; 1;</span><br><span class="line">&#x2F;&#x2F;        for (int i &#x3D; 2; i &lt; n+1; i++) &#123;</span><br><span class="line">&#x2F;&#x2F;            dp[i] &#x3D; dp[i-1] + dp[i-2];</span><br><span class="line">&#x2F;&#x2F;        &#125;</span><br><span class="line">&#x2F;&#x2F;        return dp[n];</span><br><span class="line">        return dp[1];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>8、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">package Offer;</span><br><span class="line"></span><br><span class="line">public class JumpFloor_8 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 一只青蛙一次可以跳上1级台阶，也可以跳上2级。</span><br><span class="line">     * 求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。</span><br><span class="line">     *</span><br><span class="line">     * 思路 ：</span><br><span class="line">     * dp 入门题 ， 本质跟斐波那契数列相同 ，不再赘述</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    public int jumpFloor(int target) &#123;</span><br><span class="line">        int[] dp &#x3D; new int[2];</span><br><span class="line"></span><br><span class="line">        if (target &lt; 3) return target;</span><br><span class="line">        dp[0] &#x3D; 1;</span><br><span class="line">        dp[1] &#x3D; 2;</span><br><span class="line">        for (int i &#x3D; 3; i &lt;&#x3D; target; i++) &#123;</span><br><span class="line">            int temp &#x3D; dp[0] + dp[1];</span><br><span class="line">            dp[0] &#x3D; dp[1];</span><br><span class="line">            dp[1] &#x3D; temp;</span><br><span class="line">        &#125;</span><br><span class="line">        return dp[1];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>9、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">package Offer;</span><br><span class="line"></span><br><span class="line">public class JumpFloorII_9 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。</span><br><span class="line">     * 求该青蛙跳上一个n级的台阶总共有多少种跳法。</span><br><span class="line">     *</span><br><span class="line">     * 0 ....1 2 4 8 16 ...</span><br><span class="line">     * 思路 ：</span><br><span class="line">     *</span><br><span class="line">     * 当前步数 &#x3D; 之前所有步数加和 + 1 ，从零一步跳上</span><br><span class="line">     *</span><br><span class="line">     * 观察数字规律，这里成了一道贪心问题 ， 直接数学方法给出答案即可。</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    public int jumpFloorII(int target) &#123;</span><br><span class="line">        if (target &#x3D;&#x3D; 0) return 0;</span><br><span class="line">        return (int)Math.pow(2,target-1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>10、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">package Offer;</span><br><span class="line"></span><br><span class="line">public class RectCover_10 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 我们可以用2*1的小矩形横着或者竖着去覆盖更大的矩形。</span><br><span class="line">     * 请问用n个2*1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     * 0 1 2 3 5 ……</span><br><span class="line">     *</span><br><span class="line">     * 观察数字规律发现， 这题还是斐波那契dp ，尝试一下可以AC。</span><br><span class="line">     * 分析原理， f(n-1)加一竖条 ， f(n-2)加俩横条，实现全部组合。</span><br><span class="line">     *</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public int rectCover(int target) &#123;</span><br><span class="line">        if (target &lt;&#x3D; 2) return target;</span><br><span class="line">        int[] dp &#x3D; new int[target];</span><br><span class="line">        dp[0] &#x3D; 1;</span><br><span class="line">        dp[1] &#x3D; 2;</span><br><span class="line"></span><br><span class="line">        for(int i &#x3D; 2; i &lt; target; i++)&#123;</span><br><span class="line">            dp[i] &#x3D; dp[i - 1] + dp[i - 2];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return dp[target - 1];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>11、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">package Offer;</span><br><span class="line"></span><br><span class="line">public class NumberOf1_11 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 二进制中1的个数</span><br><span class="line">     *</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 输入一个整数，输出该数32位二进制表示中1的个数。其中负数用补码表示。</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     * 按位与 &amp; (N-1) ,</span><br><span class="line">     * n - 1 消掉末尾0 ，</span><br><span class="line">     * &amp; 消掉最后一位 1 ， n !&#x3D; 0 计数 。</span><br><span class="line">     *</span><br><span class="line">     * 1001 1010 +1</span><br><span class="line">     * 1001 1001 -&gt; 1001 1000 +1</span><br><span class="line">     *              1001 0111 -&gt;  1001 0000 +1</span><br><span class="line">     *                            1000 1111 -&gt;  1000 0000 +1</span><br><span class="line">     *                                          0111 1111 break</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public int NumberOf1(int n) &#123;</span><br><span class="line">        int count &#x3D; 0;</span><br><span class="line"></span><br><span class="line">        while (n !&#x3D; 0)&#123;</span><br><span class="line">            count++;</span><br><span class="line">            n &#x3D; n&amp;(n-1);</span><br><span class="line">        &#125;</span><br><span class="line">        return count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>12、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">package Offer;</span><br><span class="line"></span><br><span class="line">public class Power_12 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 数值的整数次方</span><br><span class="line">     *</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。</span><br><span class="line">     * 保证base和exponent不同时为0</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     *  考察 快速幂算法 和 边界指数为负数等情况。</span><br><span class="line">     *</span><br><span class="line">     *</span><br><span class="line">     * 注 ： 牛客网，快速幂算法时间复杂度过高，令人迷惑 反而应该用普通算法。</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    public double power(double base, int exponent) &#123;</span><br><span class="line">        int flag &#x3D; 1;</span><br><span class="line">        if (exponent &lt; 0) flag &#x3D; -1;</span><br><span class="line"></span><br><span class="line">        double ans &#x3D; 1;</span><br><span class="line"></span><br><span class="line">        while (exponent !&#x3D; 0)&#123;</span><br><span class="line">            if ((exponent &amp; 1) &#x3D;&#x3D; 1) ans *&#x3D; base;</span><br><span class="line"></span><br><span class="line">            base *&#x3D; base;</span><br><span class="line">            exponent &gt;&gt;&#x3D; 1;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return flag &lt; 0? (1&#x2F;ans):ans;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public double powerNormal(double base, int exponent)&#123;</span><br><span class="line">        int flag &#x3D; 1;</span><br><span class="line">        if (exponent &lt; 0) flag &#x3D; -1;</span><br><span class="line"></span><br><span class="line">        double ans &#x3D; 1;</span><br><span class="line">        exponent &#x3D; Math.abs(exponent);</span><br><span class="line">        for (int i &#x3D; 0; i &lt; exponent; i++) &#123;</span><br><span class="line">            ans *&#x3D; base;</span><br><span class="line">        &#125;</span><br><span class="line">        return flag &lt; 0? (1&#x2F;ans):ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>13、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">package Offer;</span><br><span class="line"></span><br><span class="line">public class ReOrderArray_13 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 调整数组顺序奇数在前</span><br><span class="line">     *</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 输入一个整数数组，实现一个函数来调整该数组中数字的顺序，</span><br><span class="line">     * 使得所有的奇数位于数组的前半部分，</span><br><span class="line">     * 所有的偶数位于数组的后半部分，</span><br><span class="line">     * 并保证奇数和奇数，偶数和偶数之间的相对位置不变。</span><br><span class="line">     *</span><br><span class="line">     * 思路 ：</span><br><span class="line">     *</span><br><span class="line">     * 想办法将空间复杂度压倒最低。</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public void reOrderArray(int [] array) &#123;</span><br><span class="line">        int board &#x3D; -1;</span><br><span class="line">        int cur &#x3D; 0;</span><br><span class="line"></span><br><span class="line">        while (cur &lt; array.length)&#123;</span><br><span class="line">            if ((array[cur] % 2) &#x3D;&#x3D; 1)&#123; &#x2F;&#x2F; odd</span><br><span class="line">                int temp &#x3D; array[cur];</span><br><span class="line">                for (int i &#x3D; cur ; i &gt; board+1 ; i--) &#123;</span><br><span class="line">                    array[i] &#x3D; array[i-1];</span><br><span class="line">                &#125;</span><br><span class="line">                array[++board] &#x3D; temp;</span><br><span class="line">            &#125;</span><br><span class="line">            cur++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>14、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">package Offer;</span><br><span class="line"></span><br><span class="line">import Utils.ListNode;</span><br><span class="line"></span><br><span class="line">public class FindKthToTail_14 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 链表的倒数第K个节点</span><br><span class="line">     *</span><br><span class="line">     *题目描述</span><br><span class="line">     * 输入一个链表，输出该链表中倒数第k个结点。</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     * 双指针间隔为K，末指针到尾即可返回头指针。</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public ListNode FindKthToTail(ListNode head, int k) &#123;</span><br><span class="line">        ListNode tail &#x3D; head;</span><br><span class="line">        for (int i &#x3D; 0; i &lt; k; i++) &#123;</span><br><span class="line">            if (tail &#x3D;&#x3D; null) return null;</span><br><span class="line">            tail &#x3D; tail.next;</span><br><span class="line">        &#125;</span><br><span class="line">        while (tail !&#x3D; null)&#123;</span><br><span class="line">            head &#x3D; head.next;</span><br><span class="line">            tail &#x3D; tail.next;</span><br><span class="line">        &#125;</span><br><span class="line">        return head;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>15、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">package Offer;</span><br><span class="line"></span><br><span class="line">import Utils.ListNode;</span><br><span class="line"></span><br><span class="line">public class ReverseList_15 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 反转单链表</span><br><span class="line">     *</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 输入一个链表，反转链表后，输出新链表的表头。</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     * 必会题背下来。三个指针 pre next head 。</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public ListNode ReverseList(ListNode head) &#123;</span><br><span class="line">        ListNode pre &#x3D; null;</span><br><span class="line">        ListNode next &#x3D; null;</span><br><span class="line"></span><br><span class="line">        while (head !&#x3D; null)&#123;</span><br><span class="line">            next &#x3D; head.next;</span><br><span class="line">            head.next &#x3D; pre;</span><br><span class="line">            pre &#x3D; head;</span><br><span class="line">            head &#x3D; next;</span><br><span class="line">        &#125;</span><br><span class="line">        return pre;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>16、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">package Offer;</span><br><span class="line"></span><br><span class="line">import Utils.ListNode;</span><br><span class="line"></span><br><span class="line">public class MergeSortedList_16 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 合并两个排序链表</span><br><span class="line">     *</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 输入两个单调递增的链表，输出两个链表合成后的链表，</span><br><span class="line">     * 当然我们需要合成后的链表满足单调不减规则。</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     *</span><br><span class="line">     * 谁小cur next指向谁。 注意dummy节点的使用。</span><br><span class="line">     *</span><br><span class="line">     *</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public ListNode Merge(ListNode list1, ListNode list2) &#123;</span><br><span class="line">        ListNode dummy &#x3D; new ListNode(0);</span><br><span class="line">        ListNode cur &#x3D; dummy;</span><br><span class="line"></span><br><span class="line">        while (list1 !&#x3D; null &amp;&amp; list2 !&#x3D; null)&#123;</span><br><span class="line">            if (list1.val &lt; list2.val)&#123;</span><br><span class="line">                cur.next &#x3D; list1;</span><br><span class="line">                cur &#x3D; cur.next;</span><br><span class="line">                list1 &#x3D; list1.next;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                cur.next &#x3D; list2;</span><br><span class="line">                cur &#x3D; cur.next;</span><br><span class="line">                list2 &#x3D; list2.next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (list1 &#x3D;&#x3D; null) cur.next &#x3D; list2;</span><br><span class="line">        if (list2 &#x3D;&#x3D; null) cur.next &#x3D; list1;</span><br><span class="line"></span><br><span class="line">        return dummy.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/offer/" rel="tag"># offer</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/04/%E3%80%8A%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%E3%80%8B-%E7%9B%AE%E5%BD%95/" rel="prev" title="《算法刷题笔记》 - 目录">
+      <i class="fa fa-chevron-left"></i> 《算法刷题笔记》 - 目录
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">AlexLJS</p>
+  <div class="site-description" itemprop="description">个人博客，用于分享Java、Vue、MySQL学习笔记和其他技术相关知识。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexLJS</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'XVYaOQpDVtyf9vS7gyGWKM50-gzGzoHsz',
+      appKey     : 'tNz39ks5A6xit3uRDjDHC7ci',
+      placeholder: "(*^__^*) 嘻嘻……",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
