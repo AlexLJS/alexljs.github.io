@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"alexljs.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="概述兜兜转转，过了一年半，又决定重新在GitPages部署自己的博客。 19年曾利用 Hexo + GitPage 布置AlexPub_2019 。当时什么都不懂，甚至不知道Nodejs是什么……照着一篇推文，笨笨磕磕支起来博客。最终，因为Blog访问起来特别慢，并且也没寻得怎么加评论功能……遂放弃！ 期间尝试过自己的服务器…因为不太会配置，右下角总有被劫持的广告； 期间尝试过印象笔记，可mark">
+  <meta name="description" content="面试中如果被问到Redis持久化方式，只能给出以下回答：  “Redis持久化方式有两种，RDB 和 AOF。RDB是系统fork 出一条Redis子进程用来做父进程的快照，复制完毕后形成dump.rdb文件覆盖掉之前的rdb文件。rdb的触发可以通过conf文件进行配置，redis 遇到故障 restart时会加载rdb文件。AOF 是也是fork 一条进程实时追踪Redis命令记录，将更新的命">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://alexljs.com/2020/07/04/hello-world/index.html">
+<meta property="og:title" content="Redis 持久化">
+<meta property="og:url" content="http://alexljs.com/2020/07/09/Redis-%E6%8C%81%E4%B9%85%E5%8C%96/index.html">
 <meta property="og:site_name" content="AlexPub_2020">
-<meta property="og:description" content="概述兜兜转转，过了一年半，又决定重新在GitPages部署自己的博客。 19年曾利用 Hexo + GitPage 布置AlexPub_2019 。当时什么都不懂，甚至不知道Nodejs是什么……照着一篇推文，笨笨磕磕支起来博客。最终，因为Blog访问起来特别慢，并且也没寻得怎么加评论功能……遂放弃！ 期间尝试过自己的服务器…因为不太会配置，右下角总有被劫持的广告； 期间尝试过印象笔记，可mark">
+<meta property="og:description" content="面试中如果被问到Redis持久化方式，只能给出以下回答：  “Redis持久化方式有两种，RDB 和 AOF。RDB是系统fork 出一条Redis子进程用来做父进程的快照，复制完毕后形成dump.rdb文件覆盖掉之前的rdb文件。rdb的触发可以通过conf文件进行配置，redis 遇到故障 restart时会加载rdb文件。AOF 是也是fork 一条进程实时追踪Redis命令记录，将更新的命">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-07-03T16:08:08.856Z">
-<meta property="article:modified_time" content="2020-07-04T07:49:53.033Z">
+<meta property="article:published_time" content="2020-07-08T16:14:45.000Z">
+<meta property="article:modified_time" content="2020-07-08T16:16:10.218Z">
 <meta property="article:author" content="AlexLJS">
-<meta property="article:tag" content="Diary">
+<meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://alexljs.com/2020/07/04/hello-world/">
+<link rel="canonical" href="http://alexljs.com/2020/07/09/Redis-%E6%8C%81%E4%B9%85%E5%8C%96/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>Hello World | AlexPub_2020</title>
+  <title>Redis 持久化 | AlexPub_2020</title>
   
 
 
@@ -162,7 +162,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/07/04/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/07/09/Redis-%E6%8C%81%E4%B9%85%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -175,7 +175,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          Redis 持久化
         </h1>
 
         <div class="post-meta">
@@ -186,7 +186,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-07-04 00:08:08 / 修改时间：15:49:53" itemprop="dateCreated datePublished" datetime="2020-07-04T00:08:08+08:00">2020-07-04</time>
+              <time title="创建时间：2020-07-09 00:14:45 / 修改时间：00:16:10" itemprop="dateCreated datePublished" datetime="2020-07-09T00:14:45+08:00">2020-07-09</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -194,7 +194,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Diary/" itemprop="url" rel="index"><span itemprop="name">Diary</span></a>
+                  <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
                 </span>
             </span>
 
@@ -207,8 +207,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/07/04/hello-world/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/04/hello-world/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/07/09/Redis-%E6%8C%81%E4%B9%85%E5%8C%96/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/09/Redis-%E6%8C%81%E4%B9%85%E5%8C%96/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -223,24 +223,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>兜兜转转，过了一年半，又决定重新在GitPages部署自己的博客。</p>
-<p>19年曾利用 Hexo + GitPage 布置AlexPub_2019 。当时什么都不懂，甚至不知道Nodejs是什么……照着一篇推文，笨笨磕磕支起来博客。最终，因为Blog访问起来特别慢，并且也没寻得怎么加评论功能……遂放弃！</p>
-<p>期间尝试过自己的服务器…因为不太会配置，右下角总有被劫持的广告；</p>
-<p>期间尝试过印象笔记，可markdown支持的并不友好，连代码粘贴过去都不会自动换行；</p>
-<p>期间尝试过，大部分笔记和日记都写在简书…2020年7月，在我为求职整理笔记的时候，简书的发布却总也过不了审核！(+﹏+)~晕</p>
-<p>所以，最终又回了这里，权且当作自己常用笔记的备份吧！</p>
-<p>（码云Gitee Pages访问快些，打算布置一些常用的访问页面，Github还是用来放博客吧~）</p>
-<p>Alex</p>
-<p>2020-7-4</p>
+        <p>面试中如果被问到Redis持久化方式，只能给出以下回答：</p>
+<blockquote>
+<p>“Redis持久化方式有两种，RDB 和 AOF。RDB是系统fork 出一条Redis子进程用来做父进程的快照，复制完毕后形成dump.rdb文件覆盖掉之前的rdb文件。rdb的触发可以通过conf文件进行配置，redis 遇到故障 restart时会加载rdb文件。AOF 是也是fork 一条进程实时追踪Redis命令记录，将更新的命令记录到aof缓存中，并默认每隔一秒追加到Aof文件末尾。恢复记录时按顺序执行一遍aof文件即可。”</p>
+</blockquote>
+<p>对，但深度不够。</p>
 <hr>
+<h2 id="一、RDB-持久化原理"><a href="#一、RDB-持久化原理" class="headerlink" title="一、RDB 持久化原理"></a>一、RDB 持久化原理</h2><p>1、原理：</p>
+<p>父进程收到bgsave命令后，会调用linux的fork()出一条子进程，所有的备份工作由子进程完成。但是此时父进程与子进程共享同一份内存空间，父进程继续向外提供服务，子进程负责备份。利用COW写入时复制机制，保证子进程备份的数据是bgsave命令下达时刻的快照。（详见下文“Redis面试题”）</p>
+<p>2、存在问题：</p>
+<p>1) fork() 也会短暂阻塞父进程<br>2) RDB会造成最后一次数据丢失</p>
+<h2 id="二、COW-写入时复制机制-copy-on-write"><a href="#二、COW-写入时复制机制-copy-on-write" class="headerlink" title="二、COW 写入时复制机制 copy-on-write"></a>二、COW 写入时复制机制 copy-on-write</h2><p>1、基本含义 ： 维基百科</p>
+<blockquote>
+<p>写入时复制（英语：Copy-on-write，简称COW）是一种计算机程序设计领域的优化策略。其核心思想是，如果有多个调用者（callers）同时要求相同资源（如内存或磁盘上的数据存储），他们会共同获取相同的指针指向相同的资源，直到某个调用者试图修改资源的内容时，系统才会真正复制一份专用副本（private copy）给该调用者，而其他调用者所见到的最初的资源仍然保持不变。这过程对其他的调用者都是透明的（transparently）。此作法主要的优点是如果调用者没有修改该资源，就不会有副本（private copy）被创建，因此多个调用者只是读取操作时可以共享同一份资源。</p>
+</blockquote>
 <a id="more"></a>
-
-<p>hexo 常用命令：</p>
-<p>hexo clean<br>hexo generate<br>hexo server<br>hexo deploy</p>
-<p>hexo new post title</p>
-<p><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">hexo文档</a></p>
-<p>注：<br>1、暂时用简书当图床，如若简书增加了防盗链，随后我的图床会移步到github。</p>
-<p>2、Valine + LeanCloud 做评论系统 ，当然这一切目前都是免费的，也不知道能用多久。<br>文档 ： <a href="https://valine.js.org/" target="_blank" rel="noopener">https://valine.js.org/</a></p>
+<p>2、Redis 面试问题：进行快照时修改数据，快照是修改后的数据吗？</p>
+<p>答：不是。<br>当子进程进行备份，父线程尝试修改数据（此时linux内核将数据设置为Read-only），触发COW机制。子进程指向内存空间不变，父进程copy出一份修改页，在copy页中进行修改。子进程不会同步父进程的改动。</p>
+<p>3、Java 中COW的实现：</p>
+<p>CopyOnWriteArrayList和CopyOnWriteArraySet， 用于读多写少的并发场景，比如白名单，黑名单。</p>
+<h2 id="三、AOF"><a href="#三、AOF" class="headerlink" title="三、AOF"></a>三、AOF</h2><p>吃硬盘空间，占用硬盘IO 。由于Redis 多为缓存用途， 对于并发下的数据的一致性C没有那么高要求，换言之损失点数据没啥关系。还有主从复制备份数据。AOF尽量少用吧！ </p>
+<hr>
+<p>参考 ：</p>
+<p><a href="http://ifeve.com/java-copy-on-write/" target="_blank" rel="noopener">http://ifeve.com/java-copy-on-write/</a></p>
+<p><a href="https://blog.csdn.net/ctwctw/article/details/105147277" target="_blank" rel="noopener">https://blog.csdn.net/ctwctw/article/details/105147277</a></p>
 
     </div>
 
@@ -250,7 +256,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Diary/" rel="tag"># Diary</a>
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
           </div>
 
         
@@ -258,10 +264,13 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2020/07/04/%E3%80%8A%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%E3%80%8B-%E7%9B%AE%E5%BD%95/" rel="next" title="《算法刷题笔记》 - 目录">
-      《算法刷题笔记》 - 目录 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/07/07/%E5%BC%95%E7%94%A8%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" rel="prev" title="引用与垃圾回收">
+      <i class="fa fa-chevron-left"></i> 引用与垃圾回收
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/16/12-2-%E5%89%91%E6%8C%87Offer-17-22/" rel="next" title="12.2 剑指Offer 17-22">
+      12.2 剑指Offer 17-22 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -322,7 +331,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、RDB-持久化原理"><span class="nav-number">1.</span> <span class="nav-text">一、RDB 持久化原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、COW-写入时复制机制-copy-on-write"><span class="nav-number">2.</span> <span class="nav-text">二、COW 写入时复制机制 copy-on-write</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、AOF"><span class="nav-number">3.</span> <span class="nav-text">三、AOF</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

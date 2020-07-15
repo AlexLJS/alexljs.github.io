@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"alexljs.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="注：本系列jvm笔记分三线记录 ： 正常文字笔记，穿插面试问题，再穿插jvm命令简介。尽量少说废话。  一、jvm简介1. 开启与停止jvm指的是 java 虚拟机 ， 每个jvm 启动时就开启一个进程。  问题1：jvm什么时间退出？答 ： 程序正常结束；程序异常或者错误；系统崩了；调用 Runtime.exit() 或者 System.exit() ， 或者 Runtime.halt() 。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="了解jvm 与 类的加载方式">
+<meta property="og:url" content="http://alexljs.com/2020/07/07/%E4%BA%86%E8%A7%A3jvm-%E4%B8%8E-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F/index.html">
+<meta property="og:site_name" content="AlexPub_2020">
+<meta property="og:description" content="注：本系列jvm笔记分三线记录 ： 正常文字笔记，穿插面试问题，再穿插jvm命令简介。尽量少说废话。  一、jvm简介1. 开启与停止jvm指的是 java 虚拟机 ， 每个jvm 启动时就开启一个进程。  问题1：jvm什么时间退出？答 ： 程序正常结束；程序异常或者错误；系统崩了；调用 Runtime.exit() 或者 System.exit() ， 或者 Runtime.halt() 。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/15578361-731300881c643888.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2020-07-07T10:55:14.000Z">
+<meta property="article:modified_time" content="2020-07-14T03:31:40.862Z">
+<meta property="article:author" content="AlexLJS">
+<meta property="article:tag" content="Jvm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/15578361-731300881c643888.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+<link rel="canonical" href="http://alexljs.com/2020/07/07/%E4%BA%86%E8%A7%A3jvm-%E4%B8%8E-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>了解jvm 与 类的加载方式 | AlexPub_2020</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexPub_2020</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">明知不可能而为之，才能感觉自己活着。图片不显示请用Chrome访问，Email：alexljs@outlook.com</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/07/07/%E4%BA%86%E8%A7%A3jvm-%E4%B8%8E-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AlexLJS">
+      <meta itemprop="description" content="个人博客，用于分享Web开发的学习笔记和一些碎碎念。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexPub_2020">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          了解jvm 与 类的加载方式
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-07 18:55:14" itemprop="dateCreated datePublished" datetime="2020-07-07T18:55:14+08:00">2020-07-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-14 11:31:40" itemprop="dateModified" datetime="2020-07-14T11:31:40+08:00">2020-07-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Jvm/" itemprop="url" rel="index"><span itemprop="name">Jvm</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/07/%E4%BA%86%E8%A7%A3jvm-%E4%B8%8E-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/07/%E4%BA%86%E8%A7%A3jvm-%E4%B8%8E-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>注：<br>本系列jvm笔记分三线记录 ： 正常文字笔记，穿插面试问题，再穿插jvm命令简介。尽量少说废话。</p>
+<hr>
+<h2 id="一、jvm简介"><a href="#一、jvm简介" class="headerlink" title="一、jvm简介"></a>一、jvm简介</h2><h3 id="1-开启与停止"><a href="#1-开启与停止" class="headerlink" title="1. 开启与停止"></a>1. 开启与停止</h3><p>jvm指的是 java 虚拟机 ， 每个jvm 启动时就开启一个进程。</p>
+<blockquote>
+<p>问题1：jvm什么时间退出？<br>答 ： 程序正常结束；程序异常或者错误；系统崩了；调用 Runtime.exit() 或者 System.exit() ， 或者 Runtime.halt() 。</p>
+</blockquote>
+<blockquote>
+<p>命令简介 ：<br>jps ： 打印当前程序执行中的进程。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println( &quot;hello world&quot;);</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(6000);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&gt; jps</span><br><span class="line"></span><br><span class="line">7090 Jps</span><br><span class="line">7048 Test</span><br><span class="line">2927 Main</span><br><span class="line">7039 Launcher</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="2-一段java代码执行过程-："><a href="#2-一段java代码执行过程-：" class="headerlink" title="2. 一段java代码执行过程 ："></a>2. 一段java代码执行过程 ：</h3><p>jvm先将java代码编译成字节码. class，jvm再经过类的加载器将class文件加载到内存 （即将字节码文件.class解释成二进制文件）。针对不同的操作系统，由不同的jvm调整解释过程。所以，** java是跨平台语言，一次编译到处执行。**</p>
+<blockquote>
+<p>问题2：为何说java 是个半解释半编译型语言？<br>答：并不是因为编译成字节码，再解释成二进制文件执行。 而是， 因为jvm的解释过程（这里jvm指的是 Hotspot虚拟机） ，JIT（即时编译器）与解释器协同工作。JIT专门用来将常用的代码，编译成二进制码写入“方法区”的缓存，CodeCache。jit 相当于c语言的编译器，为了提升效率。 所以，java称为半解释半编译语言。</p>
+</blockquote>
+<h3 id="3-虚拟机简介-："><a href="#3-虚拟机简介-：" class="headerlink" title="3. 虚拟机简介 ："></a>3. 虚拟机简介 ：</h3><p>HotSpot虚拟机 ， 目前是性能最好的虚拟机。在响应时间与执行时间取得平衡，通过本地方法区缓存热点代码来实现的。 但 JRockit 是世界上最快的虚拟机，只专注服务器端， 放弃了响应时间较快的解释器，全部代码编译后执行。此外还有J9 虚拟机， 专门给IBM自己的服务器产品中使用。</p>
+<p>还有很多虚拟机根据不同的硬件平台定制的，速度非常快，不是前三个通用jvm虚拟机。例如TaobaoJVM ， 跟Intelcpu深度耦合， 定制了自己的jvm 对gc优化、对heap空间的对象进行多jvm共享……不再赘述</p>
+<p>（这里是废话 ， 介绍jvm他想听的是 运行时数据区。）</p>
+<hr>
+<h2 id="二、类的加载-Class-Loader-Subsystem"><a href="#二、类的加载-Class-Loader-Subsystem" class="headerlink" title="二、类的加载 Class Loader Subsystem"></a>二、类的加载 Class Loader Subsystem</h2><blockquote>
+<p>问题3 ：简单介绍一下类的加载过程？<br>答：java中类的加载分为三个阶段： 加载、链接、初始化阶段。加载阶段负责将字节码问价丢进方法区，链接阶段负责校验class文件是否合法， 初始化阶段负责初始化静态方法、静态变量静态代码块。</p>
+</blockquote>
+<h3 id="1-加载阶段-Loading"><a href="#1-加载阶段-Loading" class="headerlink" title="1. 加载阶段 Loading"></a>1. 加载阶段 Loading</h3><p>1）加载 ： 根据类全名通过二进制字节流将类加载到方法区（元数据/永久代，不同版本），再在内存中产生一个  java.lang.Class对象， 作为类的访问入口。此外 ClassLoader 负责 .class 字节码文件 加载到内存（方法区），至于能不能执行要看 Execution Engine 执行引擎 （解释器与编译器）。</p>
+<blockquote>
+<p>问题4 ：加载.class文件有哪些方式？<br>答：本地系统；通过网络获取；压缩文件 zip ， （jar ， war）；运行时计算生成，动态代理；其他文件生成，JSP ； 加密文件中获取（防止.class文件被反编译串改）</p>
+</blockquote>
+<blockquote>
+<p>问题5 ： 说说方法区、元空间、永久代？<br>答： 方法区 是 jvm虚拟机规范制定的内存区域的一种规范，永久代是hotspot虚拟机对方法区的一种落地实现。jdk 1.8 以后永久代改为了元空间，主要区别是数据位置由内存放到了硬盘，这部分避免了 OOM。</p>
+</blockquote>
+<blockquote>
+<p>命令参数：<br>-XX:MetaspaceSize=N //设置Metaspace的初始（和最⼩⼤⼩）<br>-XX:MaxMetaspaceSize=N //设置Metaspace的最⼤⼤⼩</p>
+</blockquote>
+<h3 id="2-链接阶段-Linking"><a href="#2-链接阶段-Linking" class="headerlink" title="2. 链接阶段 Linking"></a>2. 链接阶段 Linking</h3><p>链接阶段又分为，验证、准备、解析。 </p>
+<p><strong>注：加载阶段和链接阶段的部分内容是交叉进⾏的，加载阶段尚未结束，连接阶段可能就已经开始了。</strong></p>
+<p>1）验证<br>验证class文件是否合法， 例如 ： 字节码文件（二进制流）头是否为 CAFEBABE （咖啡宝贝）这里可以使用软件  binary viewer 查看，例：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/15578361-731300881c643888.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="咖啡宝贝"></p>
+<p>2）准备</p>
+<p>为类变量static分配内存初始值。（注意，这里不是实例变量）不包含 final static变量， 这种常量在 <strong>JIT编译时</strong> 内存已经分配了。</p>
+<p>3）解析</p>
+<p>引用相关的类，诸如对一些引用的系统类进行<strong>符号引用</strong>。如下 <code>#2</code></p>
+<blockquote>
+<p>命令： javap  反编译 class 文件</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">alex@ubuntu:~&#x2F;IdeaProjects&#x2F;JavaSpider&#x2F;out&#x2F;production&#x2F;JavaSpider$ javap -v Test.class </span><br><span class="line">Classfile &#x2F;home&#x2F;alex&#x2F;IdeaProjects&#x2F;JavaSpider&#x2F;out&#x2F;production&#x2F;JavaSpider&#x2F;Test.class</span><br><span class="line">  Last modified Jun 12, 2020; size 751 bytes</span><br><span class="line">  MD5 checksum 26bb72b8ad9a6d46cea306499361b54c</span><br><span class="line">  Compiled from &quot;Test.java&quot;</span><br><span class="line">public class Test</span><br><span class="line">  minor version: 0</span><br><span class="line">  major version: 58</span><br><span class="line">  flags: ACC_PUBLIC, ACC_SUPER</span><br><span class="line">Constant pool:</span><br><span class="line">   #1 &#x3D; Methodref          #2.#3          &#x2F;&#x2F; java&#x2F;lang&#x2F;Object.&quot;&lt;init&gt;&quot;:()V</span><br><span class="line">   #2 &#x3D; Class              #4             &#x2F;&#x2F; java&#x2F;lang&#x2F;Object</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-初始化阶段-Initialization"><a href="#3-初始化阶段-Initialization" class="headerlink" title="3. 初始化阶段 Initialization"></a>3. 初始化阶段 Initialization</h3><p>1）执行<strong>类的构造器方法 <clinit>()</strong> ， 只执行一次。</p>
+<p>2）<clinit>() 是执行 类变量显示赋值 和 执行静态代码块语句，（简言之就是执行 static 关键字修饰的变量和动作）， 如果没有 类变量和 static{} ，clinit就不会调用。</p>
+<p>3） <clinit>() 多线程下自动同步加锁。 </p>
+<blockquote>
+<p>面试题6 ：分析方法的执行顺序 ，代码见下：<br>这题非常麻烦， 记住原则 “优先级最高，静态都在非静态前。然后，父类在子类前。static与非static按顺序”。 额外注意的是，子类构造方法隐式调用父类构造方法super， 这里初始化 就是执行 clinit 的过程 ； main方法所在类， 无论main有没有操作都自动初始化。 </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">父类 类变量</span><br><span class="line">父类静态代码块</span><br><span class="line">子类 类变量</span><br><span class="line">子类静态代码块</span><br><span class="line">子类main方法</span><br><span class="line">父类 实例变量</span><br><span class="line">父类非静态代码块</span><br><span class="line">父类构造方法</span><br><span class="line">子类 实例变量</span><br><span class="line">子类非静态代码块</span><br><span class="line">子类构造方法</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">package JavaFeatures;</span><br><span class="line"></span><br><span class="line">public class InitOrderTest extends Father&#123;</span><br><span class="line">    private int i &#x3D; initI();</span><br><span class="line">    private static int j &#x3D; initJ();</span><br><span class="line"></span><br><span class="line">    private int initI() &#123;</span><br><span class="line">        System.out.println(&quot;子类 实例变量&quot;);</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static int initJ() &#123;</span><br><span class="line">        System.out.println(&quot;子类 类变量&quot;);</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    static &#123;</span><br><span class="line">        System.out.println(&quot;子类静态代码块&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(&quot;子类 非静态代码块&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public InitOrderTest()&#123;</span><br><span class="line">        &#x2F;&#x2F;super();</span><br><span class="line">        System.out.println(&quot;子类 构造方法&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(&quot;子类 main方法&quot;);</span><br><span class="line">        InitOrderTest init &#x3D; new InitOrderTest();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Father&#123;</span><br><span class="line">    private int i &#x3D; initI();</span><br><span class="line">    private static int j &#x3D; initJ();</span><br><span class="line"></span><br><span class="line">    private int initI() &#123;</span><br><span class="line">        System.out.println(&quot;父类 实例变量&quot;);</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static int initJ() &#123;</span><br><span class="line">        System.out.println(&quot;父类 类变量&quot;);</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    static &#123;</span><br><span class="line">        System.out.println(&quot;父类 静态代码块&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(&quot;父类 非静态代码块&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Father()&#123;</span><br><span class="line">        System.out.println(&quot;父类 构造方法&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="三、类的加载器分类-："><a href="#三、类的加载器分类-：" class="headerlink" title="三、类的加载器分类 ："></a>三、类的加载器分类 ：</h2><blockquote>
+<p>面试题7：知道哪些类加载器？<br>答： 引导类加载器， 拓展类加载器， 应用程序类加载器。 用途如下：</p>
+</blockquote>
+<h3 id="1-引导类加载器-Bootstrap-ClassLoader"><a href="#1-引导类加载器-Bootstrap-ClassLoader" class="headerlink" title="1. 引导类加载器 Bootstrap ClassLoader"></a>1. 引导类加载器 Bootstrap ClassLoader</h3><p>用于加载核心类库 ： 用c和c++编写， 没有父类加载器，用于包名java 、 javax 、 sun等开的头的的核心类库。</p>
+<h3 id="2-扩展类加载器-Extension-ClassLoader"><a href="#2-扩展类加载器-Extension-ClassLoader" class="headerlink" title="2. 扩展类加载器 Extension ClassLoader"></a>2. 扩展类加载器 Extension ClassLoader</h3><p>虚拟机自带的类加载器 ：java编写，继承ClassLoader ， 加载目录 jre/lib/ext 目录下的 class文件。</p>
+<h3 id="3-应用程序类加载器-App-ClassLoader"><a href="#3-应用程序类加载器-App-ClassLoader" class="headerlink" title="3). 应用程序类加载器 App ClassLoader"></a>3). 应用程序类加载器 App ClassLoader</h3><p>也叫 系统类加载器： java编写，继承ClassLoader ，负责加载 classpath ，一般来说Java的程序的类都是用AppClassLoader 加载的。</p>
+<p>注：<br> 如何获取类加载器？<br><code>ClassName.class.getClassLoader();</code> 引导类加载器是不能被获取的。</p>
+<p><strong>以上说的是jdk 1.8情况</strong> ， 之后的版本（jdk9以后）考虑安全性，不能将jar 丢进ext 目录进行加载，所以扩展类加载器被废除。取代的是 PlatformClassLoader，如下 ： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class ClassLoaderTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println( ClassLoaderTest.class.getClassLoader());</span><br><span class="line">        System.out.println( ClassLoaderTest.class.getClassLoader().getParent());</span><br><span class="line">        System.out.println( ClassLoaderTest.class.getClassLoader().getParent().getParent());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">jdk.internal.loader.ClassLoaders$AppClassLoader@1f89ab83</span><br><span class="line">jdk.internal.loader.ClassLoaders$PlatformClassLoader@7c30a502</span><br><span class="line">null</span><br></pre></td></tr></table></figure>
+
+<p>何时自定义类加载器？<br>一般情况下不用自定义类的加载器， 如需要代码加密、隔离加载的时候需要自定义类的加载器。</p>
+<hr>
+<h2 id="四、-双亲委派机制"><a href="#四、-双亲委派机制" class="headerlink" title="四、 双亲委派机制"></a>四、 双亲委派机制</h2><h3 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h3><p>当类加载器收到加载请求，先判断此类加载过吗 ，加载过直接返回类对象。  否则，先委托给父类加载器加载（向上委托，直到委托到引导类加载器），如果父类加载器可以完成加载任务，就由父类完成。如果，父类加载器不能完成， 再交由子类加载器进行加载。一个类只能由一个加载器加载。有时候存在“接口由引导类加载， 实现类由App加载器加载”。</p>
+<h3 id="2-优势"><a href="#2-优势" class="headerlink" title="2. 优势"></a>2. 优势</h3><p>保护程序安全 ，保证核心 Api 不会被篡改。（沙箱安全机制） 即使你自己写了 java.lang.String ，引导类加载器也会从jdk中加载String ， 忽略掉自创的类。</p>
+<blockquote>
+<p>问题8： 如何判断两个类完全一样？<br>答：完整的包名一致；两个类的类加载是相同的。</p>
+</blockquote>
+<h3 id="3-类的主动引用和被动引用区别？"><a href="#3-类的主动引用和被动引用区别？" class="headerlink" title="3. 类的主动引用和被动引用区别？"></a>3. 类的主动引用和被动引用区别？</h3><p>1）主动引用</p>
+<blockquote>
+<p>1、遇到new,getstatic,putstatic,invokestatic这4条字节码指令时，类如果没初始化就会被初始化，创建对象，读取或设置静态字段，调用静态方法。<br>2、反射<br>3、子类初始化前会先初始化父类<br>4、包含main方法的类，虚拟机启动时会先初始化该类</p>
+</blockquote>
+<p>2）被动引用</p>
+<p>除了以上主动引用情况，都是被动引用。 举例， 子类调用父类静态成员变量：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class SuperClass&#123; </span><br><span class="line">  static&#123; </span><br><span class="line">    System.out.println(&quot;super class init.&quot;); </span><br><span class="line">  &#125; </span><br><span class="line">  public static int value&#x3D;123; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">class SubClass extends SuperClass&#123; </span><br><span class="line">  static&#123; </span><br><span class="line">    System.out.println(&quot;sub class init.&quot;); </span><br><span class="line">  &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">public class test&#123; </span><br><span class="line">  public static void main(String[]args)&#123; </span><br><span class="line">    System.out.println(SubClass.value); </span><br><span class="line">  &#125; </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3）区别 </p>
+<p>类初始化的时候，是否调用类的初始化 <clinit>来 初始化静态变量、方法。</p>
+<hr>
+<p>参考： </p>
+<p><a href="https://blog.csdn.net/weixin_42636552/java/article/details/82949999" target="_blank" rel="noopener">https://blog.csdn.net/weixin_42636552/java/article/details/82949999</a><br><a href="https://www.bilibili.com/video/BV1Eb411P7bP" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1Eb411P7bP</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Jvm/" rel="tag"># Jvm</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/07/NIO-%E4%B8%8E-Reactor%E6%A8%A1%E5%BC%8F/" rel="prev" title="NIO 与 Reactor模式">
+      <i class="fa fa-chevron-left"></i> NIO 与 Reactor模式
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/07/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/" rel="next" title="jvm运行时数据区">
+      jvm运行时数据区 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、jvm简介"><span class="nav-number">1.</span> <span class="nav-text">一、jvm简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-开启与停止"><span class="nav-number">1.1.</span> <span class="nav-text">1. 开启与停止</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-一段java代码执行过程-："><span class="nav-number">1.2.</span> <span class="nav-text">2. 一段java代码执行过程 ：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-虚拟机简介-："><span class="nav-number">1.3.</span> <span class="nav-text">3. 虚拟机简介 ：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、类的加载-Class-Loader-Subsystem"><span class="nav-number">2.</span> <span class="nav-text">二、类的加载 Class Loader Subsystem</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-加载阶段-Loading"><span class="nav-number">2.1.</span> <span class="nav-text">1. 加载阶段 Loading</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-链接阶段-Linking"><span class="nav-number">2.2.</span> <span class="nav-text">2. 链接阶段 Linking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-初始化阶段-Initialization"><span class="nav-number">2.3.</span> <span class="nav-text">3. 初始化阶段 Initialization</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、类的加载器分类-："><span class="nav-number">3.</span> <span class="nav-text">三、类的加载器分类 ：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-引导类加载器-Bootstrap-ClassLoader"><span class="nav-number">3.1.</span> <span class="nav-text">1. 引导类加载器 Bootstrap ClassLoader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-扩展类加载器-Extension-ClassLoader"><span class="nav-number">3.2.</span> <span class="nav-text">2. 扩展类加载器 Extension ClassLoader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-应用程序类加载器-App-ClassLoader"><span class="nav-number">3.3.</span> <span class="nav-text">3). 应用程序类加载器 App ClassLoader</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、-双亲委派机制"><span class="nav-number">4.</span> <span class="nav-text">四、 双亲委派机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-介绍"><span class="nav-number">4.1.</span> <span class="nav-text">1. 介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-优势"><span class="nav-number">4.2.</span> <span class="nav-text">2. 优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-类的主动引用和被动引用区别？"><span class="nav-number">4.3.</span> <span class="nav-text">3. 类的主动引用和被动引用区别？</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">AlexLJS</p>
+  <div class="site-description" itemprop="description">个人博客，用于分享Web开发的学习笔记和一些碎碎念。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexLJS</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'XVYaOQpDVtyf9vS7gyGWKM50-gzGzoHsz',
+      appKey     : 'tNz39ks5A6xit3uRDjDHC7ci',
+      placeholder: "(*^__^*) 嘻嘻……",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

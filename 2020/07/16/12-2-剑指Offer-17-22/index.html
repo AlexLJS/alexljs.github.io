@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"alexljs.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="17、 12345678910111213141516171819202122232425262728293031323334public class HasSubtree_17 &amp;#123;    &#x2F;**     * 树的子结构     * 题目描述     * 输入两棵二叉树A，B，判断B是不是A的子结构。     * （ps：我们约定空树不是任意一个树的子结构）     *">
+<meta property="og:type" content="article">
+<meta property="og:title" content="12.2 剑指Offer 17-22">
+<meta property="og:url" content="http://alexljs.com/2020/07/16/12-2-%E5%89%91%E6%8C%87Offer-17-22/index.html">
+<meta property="og:site_name" content="AlexPub_2020">
+<meta property="og:description" content="17、 12345678910111213141516171819202122232425262728293031323334public class HasSubtree_17 &amp;#123;    &#x2F;**     * 树的子结构     * 题目描述     * 输入两棵二叉树A，B，判断B是不是A的子结构。     * （ps：我们约定空树不是任意一个树的子结构）     *">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-07-15T16:15:17.000Z">
+<meta property="article:modified_time" content="2020-07-15T16:23:27.664Z">
+<meta property="article:author" content="AlexLJS">
+<meta property="article:tag" content="offer">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://alexljs.com/2020/07/16/12-2-%E5%89%91%E6%8C%87Offer-17-22/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>12.2 剑指Offer 17-22 | AlexPub_2020</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexPub_2020</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">明知不可能而为之，才能感觉自己活着。图片不显示请用Chrome访问，Email：alexljs@outlook.com</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/07/16/12-2-%E5%89%91%E6%8C%87Offer-17-22/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AlexLJS">
+      <meta itemprop="description" content="个人博客，用于分享Web开发的学习笔记和一些碎碎念。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexPub_2020">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          12.2 剑指Offer 17-22
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-07-16 00:15:17 / 修改时间：00:23:27" itemprop="dateCreated datePublished" datetime="2020-07-16T00:15:17+08:00">2020-07-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/16/12-2-%E5%89%91%E6%8C%87Offer-17-22/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/16/12-2-%E5%89%91%E6%8C%87Offer-17-22/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>17、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">public class HasSubtree_17 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 树的子结构</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 输入两棵二叉树A，B，判断B是不是A的子结构。</span><br><span class="line">     * （ps：我们约定空树不是任意一个树的子结构）</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     *  没什么更好的方法，目前就是遍历二叉树，找到相同的node ，</span><br><span class="line">     *</span><br><span class="line">     *  模式树指针和当前指针一起往下走，judge值是否相同。</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public boolean HasSubtree(TreeNode root1, TreeNode root2) &#123;</span><br><span class="line">        if (root2 &#x3D;&#x3D; null) return false;</span><br><span class="line">        if (root1 &#x3D;&#x3D; null) return root2 &#x3D;&#x3D; null? true:false;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack &#x3D; new Stack&lt;&gt;();</span><br><span class="line">        stack.push(root1);</span><br><span class="line">        while (!stack.isEmpty())&#123;</span><br><span class="line">            TreeNode temp &#x3D; stack.pop();</span><br><span class="line">            &#x2F;&#x2F;do sth</span><br><span class="line">            if (temp.val &#x3D;&#x3D; root2.val &amp;&amp; judge(temp, root2)) return true;</span><br><span class="line">            if (temp.right !&#x3D; null) stack.push(temp.right);</span><br><span class="line">            if (temp.left !&#x3D; null) stack.push(temp.left);</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    public boolean judge(TreeNode root1, TreeNode root2)&#123;</span><br><span class="line">        if (root1 &#x3D;&#x3D; null) return root2 &#x3D;&#x3D; null? true:false;</span><br><span class="line">        if (root2 &#x3D;&#x3D; null) return true; &#x2F;&#x2F;主树可以不遍历到null</span><br><span class="line"></span><br><span class="line">        if (root1.val !&#x3D; root2.val) return false;</span><br><span class="line">        return judge(root1.left, root2.left) &amp;&amp; judge(root1.right, root2.right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>18、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class MirrorBinaryTree_18 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 操作给定的二叉树，将其变换为源二叉树的镜像。</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     * 这题很简单递归翻转左右节点</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public void Mirror(TreeNode root) &#123;</span><br><span class="line">        if (root &#x3D;&#x3D; null) return;</span><br><span class="line">        Mirror(root.left);</span><br><span class="line">        Mirror(root.right);</span><br><span class="line">        TreeNode temp &#x3D; root.left;</span><br><span class="line">        root.left &#x3D; root.right;</span><br><span class="line">        root.right &#x3D; temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>19、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class PrintMatrix_19 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     *</span><br><span class="line">     *顺序打印矩阵</span><br><span class="line">     *题目描述</span><br><span class="line">     *输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，</span><br><span class="line">     * 例如，如果输入如下4 X 4矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16</span><br><span class="line">     * 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     * 锁定左上、右下两个角标，按层打印矩阵。注意特殊情况，如同行同列。</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    public ArrayList&lt;Integer&gt; printMatrix(int [][] matrix) &#123;</span><br><span class="line">        ArrayList&lt;Integer&gt; res &#x3D; new ArrayList&lt;&gt;();</span><br><span class="line">        process(matrix,0,0,matrix.length-1,matrix[0].length-1,res);</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void process(int[][] matrix, int li, int lj, int ri, int rj, ArrayList&lt;Integer&gt; res)&#123;</span><br><span class="line">        if (li &gt; ri || lj &gt; rj) return;</span><br><span class="line">        if (li &#x3D;&#x3D; ri) while (lj &lt;&#x3D; rj) res.add(matrix[li][lj++]);</span><br><span class="line">        if (lj &#x3D;&#x3D; rj) while (li &lt;&#x3D; ri) res.add(matrix[li++][lj]);</span><br><span class="line"></span><br><span class="line">        int i;int j;</span><br><span class="line">        for (i &#x3D; li,j &#x3D; lj; j &lt; rj; j++) &#123; res.add(matrix[i][j]); &#125;</span><br><span class="line">        for (i &#x3D; li,j &#x3D; rj; i &lt; ri; i++) &#123; res.add(matrix[i][j]); &#125;</span><br><span class="line">        for (i &#x3D; ri,j &#x3D; rj; j &gt; lj; j--) &#123; res.add(matrix[i][j]); &#125;</span><br><span class="line">        for (i &#x3D; ri,j &#x3D; lj; i &gt; li; i--) &#123; res.add(matrix[i][j]); &#125;</span><br><span class="line"></span><br><span class="line">        process(matrix,++li,++lj,--ri,--rj,res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>20、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public class MinStack_20 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 最小值栈</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。</span><br><span class="line">     * 注意：保证测试中不会当栈为空的时候，对栈调用pop()或者min()或者top()方法。</span><br><span class="line">     *</span><br><span class="line">     * 思路:</span><br><span class="line">     * 这个问题核心在于最小值出栈后，如何找到之前的最小值，所以min数据结构一定是集合。</span><br><span class="line">     * 由于时间复杂度的限制是不可以遍历集合，所以考虑用stack。</span><br><span class="line">     *&#x2F;</span><br><span class="line">    private Stack&lt;Integer&gt; data &#x3D; new Stack&lt;&gt;();</span><br><span class="line">    private Stack&lt;Integer&gt; min &#x3D; new Stack&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public void push(int node) &#123;</span><br><span class="line">        if (min.isEmpty() || node &lt;&#x3D; min.peek()) min.push(node);</span><br><span class="line"></span><br><span class="line">        data.push(node);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void pop() &#123;</span><br><span class="line">        if (data.pop() &#x3D;&#x3D; min.peek()) min.pop();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int top() &#123;</span><br><span class="line">        return data.peek();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int min() &#123;</span><br><span class="line">        return min.peek();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>21、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">public class IsPopOrder_21 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 栈的压入弹出</span><br><span class="line">     *</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。</span><br><span class="line">     * 假设压入栈的所有数字均不相等。</span><br><span class="line">     * 例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，</span><br><span class="line">     * 但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     * 用stack模拟出入栈过程。每push一个值之前，都检验栈顶元素是否该出栈。（等于pop[j]）</span><br><span class="line">     * 该出则出，直到所有元素都入栈。</span><br><span class="line">     * </span><br><span class="line">     * 检验出栈是否pop[]是否出完 ， stack pop同时移动。pop空，stack空，即为true。</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    public boolean IsPopOrder(int [] pushA,int [] popA) &#123;</span><br><span class="line">        if (pushA.length !&#x3D; popA.length) return false;</span><br><span class="line"></span><br><span class="line">        Stack&lt;Integer&gt; stack &#x3D; new Stack&lt;&gt;();</span><br><span class="line">        int i &#x3D; 0;</span><br><span class="line">        int j &#x3D; 0;</span><br><span class="line"></span><br><span class="line">        while (i &lt; popA.length) &#123;</span><br><span class="line">            if (stack.isEmpty() || stack.peek() !&#x3D; popA[j])&#123;</span><br><span class="line">                stack.push(pushA[i++]);</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                j++;</span><br><span class="line">                stack.pop();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        while (j &lt; popA.length &amp;&amp; popA[j] &#x3D;&#x3D; stack.peek())&#123;</span><br><span class="line">            j++;</span><br><span class="line">            stack.pop();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return stack.isEmpty()? true:false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>22、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public class PrintFromTopToBottom_22 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 从上往下打印二叉树</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 从上往下打印出二叉树的每个节点，同层节点从左至右打印。</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     * 二叉树的层序遍历，可以解决很多二叉树问题的基石。</span><br><span class="line">     * 核心就是 使用 队列queue。</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    public ArrayList&lt;Integer&gt; PrintFromTopToBottom(TreeNode root) &#123;</span><br><span class="line">        ArrayList&lt;Integer&gt; res &#x3D; new ArrayList&lt;&gt;();</span><br><span class="line">        if (root &#x3D;&#x3D; null) return res;</span><br><span class="line">        Queue&lt;TreeNode&gt; queue &#x3D; new LinkedList&lt;&gt;();</span><br><span class="line">        queue.add(root);</span><br><span class="line">        while (!queue.isEmpty())&#123;</span><br><span class="line">            TreeNode ele &#x3D; queue.poll();</span><br><span class="line">            res.add(ele.val);</span><br><span class="line">            if (ele.left !&#x3D; null) queue.add(ele.left);</span><br><span class="line">            if (ele.right !&#x3D; null) queue.add(ele.right);</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/offer/" rel="tag"># offer</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/09/Redis-%E6%8C%81%E4%B9%85%E5%8C%96/" rel="prev" title="Redis 持久化">
+      <i class="fa fa-chevron-left"></i> Redis 持久化
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/16/%E6%9D%82%E8%AE%B0-Java%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="next" title="杂记 Java基本数据类型">
+      杂记 Java基本数据类型 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">AlexLJS</p>
+  <div class="site-description" itemprop="description">个人博客，用于分享Web开发的学习笔记和一些碎碎念。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexLJS</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'XVYaOQpDVtyf9vS7gyGWKM50-gzGzoHsz',
+      appKey     : 'tNz39ks5A6xit3uRDjDHC7ci',
+      placeholder: "(*^__^*) 嘻嘻……",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

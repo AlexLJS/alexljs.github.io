@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"alexljs.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="不喜欢太多高大上的理论，记不住…… 〇、前置知识1、什么是IO？答：io ， input，output 。 一句话，IO就是为了完成数据传输。 指的是，完成程序与其他载体的数据传输，可以是硬盘、进程、缓存等。 因为完成程序与其他载体， 程序为本体，往程序里面写是in， 往外部写是out。（其实，进程缓冲区 和 内核缓冲区分别“挡”在内存和硬盘前面， IO操作先写缓冲区。再由内核将缓冲区写入硬盘…）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NIO 与 Reactor模式">
+<meta property="og:url" content="http://alexljs.com/2020/07/07/NIO-%E4%B8%8E-Reactor%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="AlexPub_2020">
+<meta property="og:description" content="不喜欢太多高大上的理论，记不住…… 〇、前置知识1、什么是IO？答：io ， input，output 。 一句话，IO就是为了完成数据传输。 指的是，完成程序与其他载体的数据传输，可以是硬盘、进程、缓存等。 因为完成程序与其他载体， 程序为本体，往程序里面写是in， 往外部写是out。（其实，进程缓冲区 和 内核缓冲区分别“挡”在内存和硬盘前面， IO操作先写缓冲区。再由内核将缓冲区写入硬盘…）">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-07-07T10:54:25.000Z">
+<meta property="article:modified_time" content="2020-07-08T09:43:12.875Z">
+<meta property="article:author" content="AlexLJS">
+<meta property="article:tag" content="Java基础">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://alexljs.com/2020/07/07/NIO-%E4%B8%8E-Reactor%E6%A8%A1%E5%BC%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>NIO 与 Reactor模式 | AlexPub_2020</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexPub_2020</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">明知不可能而为之，才能感觉自己活着。图片不显示请用Chrome访问，Email：alexljs@outlook.com</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/07/07/NIO-%E4%B8%8E-Reactor%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AlexLJS">
+      <meta itemprop="description" content="个人博客，用于分享Web开发的学习笔记和一些碎碎念。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexPub_2020">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NIO 与 Reactor模式
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-07 18:54:25" itemprop="dateCreated datePublished" datetime="2020-07-07T18:54:25+08:00">2020-07-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-08 17:43:12" itemprop="dateModified" datetime="2020-07-08T17:43:12+08:00">2020-07-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/07/NIO-%E4%B8%8E-Reactor%E6%A8%A1%E5%BC%8F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/07/NIO-%E4%B8%8E-Reactor%E6%A8%A1%E5%BC%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>不喜欢太多高大上的理论，记不住……</p>
+<h2 id="〇、前置知识"><a href="#〇、前置知识" class="headerlink" title="〇、前置知识"></a>〇、前置知识</h2><h4 id="1、什么是IO？"><a href="#1、什么是IO？" class="headerlink" title="1、什么是IO？"></a>1、什么是IO？</h4><p>答：io ， input，output 。 一句话，<strong>IO就是为了完成数据传输</strong>。 指的是，完成程序与其他载体的数据传输，可以是硬盘、进程、缓存等。 因为完成程序与其他载体， 程序为本体，往程序里面写是in， 往外部写是out。<br>（其实，进程缓冲区 和 内核缓冲区分别“挡”在内存和硬盘前面， IO操作先写缓冲区。再由内核将缓冲区写入硬盘…）</p>
+<h4 id="2、什么Socket？"><a href="#2、什么Socket？" class="headerlink" title="2、什么Socket？"></a>2、什么Socket？</h4><p>答 ： 哎，我一直说不清 。 只知道， Socket是两个进程之间双向通信的方式，支持不同的通信协议TCP UDP，表示方式 ： IP地址 + 端口号。 说是可以看成两个进程通信的端点，然后里面还能放入数据！ </p>
+<h4 id="3、什么是IO模型？"><a href="#3、什么是IO模型？" class="headerlink" title="3、什么是IO模型？"></a>3、什么是IO模型？</h4><p>答：指的是Linux系统IO模型。分为阻塞IO、非阻塞IO、多路复用IO、信号驱动IO以及异步IO。这里的同步/异步、阻塞/非阻塞针对的都是用户程序。（<a href="https://www.cnblogs.com/crazymakercircle/p/10225159.html" target="_blank" rel="noopener">此文</a>对于同步异步的解释是有偏差的，我更倾向于下面这种解释，程序缓冲区是由 <em>程序接收系统内核数据，由程序写入完成IO操作就应该是同步IO；如果是系统内核准备好数据写进程序缓冲区，再通知程序，那么这次IO是由系统完成的，程序线程可以做其他操作，应该算异步IO</em> ）</p>
+<blockquote>
+<p>实际IO操作由应用程序本身执行，会阻塞线程就是同步IO。反之由操作系统完成就是异步IO。（《疯狂java》）</p>
+</blockquote>
+<p>简述一下，linux系统的虚拟内存空间被划分为两部分： <strong>内核内存空间与用户内存空间</strong>。这里的用户空间就是运行的程序进程， 由于<strong>内核与用户空间的数据交换非常费时</strong>， 所以在两部分分别设置了缓冲区。用户的缓冲区是IO库用buffer优化的，而内核的buffer是自带的，并且内核向硬盘的写入操作是我们不能控制的。所谓的Linux IO模型就是在内核空间与用户空间的数据交换时起作用。</p>
+<a id="more"></a>
+<p>无论什么样的IO模型，<code>硬盘 - （准备数据耗时）-内核缓冲区 - （复制耗时） - 用户缓冲区</code> 这个过程都是无法优化的。所谓的同步模型，是指用户线程在这个等待阶段阻塞，什么都干不了只能等结果！异步模型是指等待的过程中，用户进程可以干别的；结果好了， 内核再通知你。至于，阻塞/非阻塞指的是用户进程这段时间有没有干别的事情，还是挂起等在原地。</p>
+<p>（进程指应用， 线程指单个socket，下文用线程来说明了。并且，有的应用代表举例，使用的是原理一致的WEB IO 用例 ）</p>
+<p>同步阻塞IO ：应用代表—Java默认的socket都是阻塞的。等待的时候，用户线程挂起不吃CPU资源。线程之间切换吃内存资源，高并发要开好多线程维护连接，用户线程此时还啥也干不了，不适用高并发。</p>
+<p>同步非阻塞IO ：None Blocking IO ， 不是 New IO！！这种IO像智障一样，用户线程采用“轮询”的方式，一遍一遍问系统buffer：“数据准备好了吗？”  确实是不阻塞了，但用户线程也没闲置下来！本质跟阻塞差不多。可以通过设置socket使其变为non-blocking实现这种NIO。</p>
+<p>多路复用IO ：应用代表—  Java NIO（New IO）、 Redis 采用IO多路复用对于Socket的监听。用户线程准备完毕就更改状态，说 ： “自己准备请求数据，准备获得连接” ，进入请求连接模式。系统内核会单开一条线程，不断轮询Socket 列表， 看看哪一个socket状态为准备完毕，跟它连接上，连接后用户线程开始阻塞！内核处理请求将数据写入用户缓冲区并通知用户。 我们发现，一旦建立连接，就变为上一种NIO！</p>
+<p>异步非阻塞IO ：应用代表— Nodejs （事件驱动非阻塞IO模型）。 用户发个请求，然后就可以干别的了。内核处理好了，再通知用户来取结果。</p>
+<h4 id="4、热身：-遍历文件夹下所有文件（尽管-，这在WEB开发中没什么用-2333）"><a href="#4、热身：-遍历文件夹下所有文件（尽管-，这在WEB开发中没什么用-2333）" class="headerlink" title="4、热身： 遍历文件夹下所有文件（尽管 ，这在WEB开发中没什么用 2333）"></a>4、热身： 遍历文件夹下所有文件（尽管 ，这在WEB开发中没什么用 2333）</h4><p>常规递归 ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public void print1(String path)&#123;</span><br><span class="line">    travel(new File(path));</span><br><span class="line">&#125;</span><br><span class="line">private void travel(File input)&#123;</span><br><span class="line">    if (!input.exists()) return;</span><br><span class="line">    Arrays.stream(input.listFiles()).forEach(file -&gt; &#123;</span><br><span class="line">        if (file.isDirectory()) &#123;</span><br><span class="line">            travel(file);</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            System.out.println(file.getPath());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>NIO提供新接口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public void print2(String path) throws Exception&#123;</span><br><span class="line">    Files.walkFileTree(Paths.get(path),new SimpleFileVisitor&lt;Path&gt;()&#123;</span><br><span class="line">        @Override</span><br><span class="line">        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException &#123;</span><br><span class="line">            System.out.println(&quot;正在访问文件：&quot; + file);</span><br><span class="line">            return super.visitFile(file, attrs);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException &#123;</span><br><span class="line">            System.out.println(&quot;正在访问路径：&quot; + dir);</span><br><span class="line">            return super.preVisitDirectory(dir, attrs);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="一、-传统io区别"><a href="#一、-传统io区别" class="headerlink" title="一、 传统io区别"></a>一、 传统io区别</h2><p>1、NIO：面向 buffer 缓冲区 ，传统IO : 面向流</p>
+<p>2、NIO：缓冲区双向的 ， 传统IO : 单向的 </p>
+<p>3、NIO ： 通道Channel  仅仅用于连接，需要由缓冲区buffer来承载数据<br>传统IO：建立管道pipe 可以承载二进制流数据，输入输出流 </p>
+<p>4、NIO ： 非阻塞式 io ， 传统IO：阻塞式io  </p>
+<p>5、NIO有选择器Selector。</p>
+<p>（4、5 网络编程时使用）</p>
+<h2 id="二、NIO核心"><a href="#二、NIO核心" class="headerlink" title="二、NIO核心"></a>二、NIO核心</h2><p>1、通道Channel   </p>
+<p>Channel 模拟 传统Io的流操作，只不过这次Channel内不是Stream而是一块区域Buffer。</p>
+<p>2、缓冲区 Buffer</p>
+<p>Buffer 是一个容器，底层是数组。额外说明一点，NIO允许将内存的一部分映射map到buffer上。</p>
+<h2 id="三、-缓冲区-操作"><a href="#三、-缓冲区-操作" class="headerlink" title="三、 缓冲区 操作"></a>三、 缓冲区 操作</h2><h4 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h4><p>底层就是数组 ， 不同基本类型都有不同的buffer对应。最常用的是 ByteBuffer，还有CharBuffer，LongBuffer等继承自Buffer抽象类。</p>
+<h4 id="2、管理方式"><a href="#2、管理方式" class="headerlink" title="2、管理方式"></a>2、管理方式</h4><p>1) 分配缓冲区大小<br>eg :   CharBuffer.allocate()</p>
+<p>2) 存取方式<br>put()<br>get()</p>
+<p>3) 核心属性</p>
+<p>capacity   :  存储数据容量  ， 申请后不可修改</p>
+<p>limit ：limit 后面的数据不可进行读写</p>
+<p>position ： 正在操作数据的位置</p>
+<p>mark() : 标记  position 位置，position可以直接定位到Mark处。</p>
+<blockquote>
+<p>满足关系 ：0&lt;= mark &lt;= position &lt;= limit &lt;= capacity</p>
+</blockquote>
+<p>4) 读、写数据模式切换</p>
+<p>flip()</p>
+<blockquote>
+<p>Flips this buffer. The limit is set to the current position and then the position is set to zero. If the mark is defined then it is discarded.</p>
+</blockquote>
+<p>可见，flip将limit设置到position，将position设置到0。可以理解为是“ 读写数据模式切换 ”， 将position归位，limit限制读到null。 </p>
+<p>rewind()<br>重读</p>
+<p>clear()<br>清空缓冲区，注 数据还在，但数据处于被遗忘状态 （通过调整limit 指针，后面的读不到）</p>
+<p>reset()<br>恢复到 mark标记的位置</p>
+<p>（还有很多其他方法   ）</p>
+<h4 id="3、直接缓冲区与非直接缓冲区"><a href="#3、直接缓冲区与非直接缓冲区" class="headerlink" title="3、直接缓冲区与非直接缓冲区"></a>3、直接缓冲区与非直接缓冲区</h4><p>1) allocate()<br>开辟空间在 jvm 堆内存中。</p>
+<p>2) allocateDirect() </p>
+<p>直接建立在磁盘中，提高效率，只支持 byteBuffer。通过物理内存映射文件 ，再由操作系统控制写入硬盘，一定程度上提高效率。对于大量数据，消耗资源。</p>
+<p>注： isDirect() 判断buffer是否是直接缓冲区</p>
+<h2 id="四、通道（Channel）"><a href="#四、通道（Channel）" class="headerlink" title="四、通道（Channel）"></a>四、通道（Channel）</h2><p>本质跟流没啥区别， 直观上看输入流与输出流合二为一，可以节约cpu 的io资源。</p>
+<h4 id="1、常用实现类"><a href="#1、常用实现类" class="headerlink" title="1、常用实现类"></a>1、常用实现类</h4><p>java.nio.channels.Channel<br>父类接口</p>
+<p>1.1 文件IO</p>
+<p>FileChannel<br>文件通道</p>
+<p>1.2 网络IO ：</p>
+<p>SocketChannel<br> TCP 客户端</p>
+<p>ServerSocketChannel<br> TCP 服务器</p>
+<p>DatagramChannel<br> UDP客户端</p>
+<h4 id="2、获取通道"><a href="#2、获取通道" class="headerlink" title="2、获取通道"></a>2、获取通道</h4><p>支持通道的类，即可调用getChannel()获取通道<br>getChannel()</p>
+<p>注 ：支持通道的类举例<br>本地 ：<br>FileInputStream/FileOutputStream<br>RandomAccessFile</p>
+<p>网络 :<br>Socket<br>ServerSocket<br>DatagramSocket</p>
+<p>其他方式获取Channel ：<br>jdk1.7之后通过  open()<br>Files工具类 newByteChannel()</p>
+<h4 id="3、“通道-缓冲区”-完成文件复制-例：-直接缓冲区"><a href="#3、“通道-缓冲区”-完成文件复制-例：-直接缓冲区" class="headerlink" title="3、“通道 + 缓冲区” 完成文件复制 (例： 直接缓冲区)"></a>3、“通道 + 缓冲区” 完成文件复制 (例： 直接缓冲区)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public void copy()  &#123;</span><br><span class="line">    FileChannel inChannel &#x3D; null;</span><br><span class="line">    FileChannel outChannel &#x3D; null;</span><br><span class="line">    try &#123;</span><br><span class="line">         inChannel &#x3D; FileChannel.open(Paths.get(&quot;C:\\Users\\Alex\\Desktop\\集合框架.gif&quot;), StandardOpenOption.READ);</span><br><span class="line">         outChannel &#x3D; FileChannel.open(Paths.get(&quot;C:\\Users\\Alex\\Desktop\\集合框架2.gif&quot;), StandardOpenOption.WRITE,StandardOpenOption.READ,StandardOpenOption.CREATE_NEW);</span><br><span class="line"></span><br><span class="line">        MappedByteBuffer inMappedBuf &#x3D; inChannel.map(FileChannel.MapMode.READ_ONLY,0,inChannel.size());</span><br><span class="line">        MappedByteBuffer outMappedBuf &#x3D; outChannel.map(FileChannel.MapMode.READ_WRITE, 0, inChannel.size());</span><br><span class="line"></span><br><span class="line">        byte[] dst &#x3D; new byte[inMappedBuf.limit()];</span><br><span class="line">        inMappedBuf.get(dst);</span><br><span class="line">        outMappedBuf.put(dst);</span><br><span class="line">        </span><br><span class="line">    &#125;catch (IOException e)&#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;finally &#123;</span><br><span class="line">        if (inChannel !&#x3D; null)&#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                inChannel.close();</span><br><span class="line">            &#125;catch (IOException e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if (outChannel !&#x3D; null)&#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                outChannel.close();</span><br><span class="line">            &#125;catch (IOException e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4、使用通道之间的数据传递-，简化操作"><a href="#4、使用通道之间的数据传递-，简化操作" class="headerlink" title="4、使用通道之间的数据传递 ，简化操作"></a>4、使用通道之间的数据传递 ，简化操作</h4><p>transferFrom()<br>transferTo()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public void copy2() throws IOException &#123;</span><br><span class="line">     FileChannel inChannel &#x3D; FileChannel.open(Paths.get(&quot;C:\\Users\\Alex\\Desktop\\集合框架.gif&quot;), StandardOpenOption.READ);</span><br><span class="line">     FileChannel outChannel &#x3D; FileChannel.open(Paths.get(&quot;C:\\Users\\Alex\\Desktop\\集合框架2.gif&quot;), StandardOpenOption.WRITE,StandardOpenOption.READ,StandardOpenOption.CREATE_NEW);</span><br><span class="line"></span><br><span class="line">     inChannel.transferTo(0, inChannel.size(), outChannel);</span><br><span class="line"></span><br><span class="line">     inChannel.close();</span><br><span class="line">     outChannel.close();</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="5、分散读取与聚集写入"><a href="#5、分散读取与聚集写入" class="headerlink" title="5、分散读取与聚集写入"></a>5、分散读取与聚集写入</h4><p>channel 可以通过 read()  、write() 方法来读取写入缓冲区数据。当接受参数 Buffer[] 时， 则可实现分散读取/聚集写入功能。</p>
+<h2 id="五、-网络通信的阻塞与非阻塞"><a href="#五、-网络通信的阻塞与非阻塞" class="headerlink" title="五、 网络通信的阻塞与非阻塞"></a>五、 网络通信的阻塞与非阻塞</h2><h4 id="1、阻塞-IO"><a href="#1、阻塞-IO" class="headerlink" title="1、阻塞 IO"></a>1、阻塞 IO</h4><p>通过多线程 “缓解” 线程阻塞问题</p>
+<h4 id="2、非阻塞-NIO"><a href="#2、非阻塞-NIO" class="headerlink" title="2、非阻塞 NIO"></a>2、非阻塞 NIO</h4><p>提出概念  ： 选择器 Selector ，即前置知识提到的“IO多路复用”的落地实现。</p>
+<p><code>client --&gt; selector --&gt; server</code></p>
+<p>每个希望用非阻塞方式通信的client 都应将channel 注册到selector上，由selector 监控 client 的 channel 状态， 当channel 准备就绪后， 再由selector将请求分配到一个或者多个线程上。</p>
+<p>使用 SelectionKey 称为“选择键” 来<strong>表示注册到选择器的channel的状态</strong> ：<br>1  read<br>4 write<br>8 connect<br>16 accept</p>
+<h4 id="3、-使用NIO完成网络通信-：-阻塞式-、-非阻塞式"><a href="#3、-使用NIO完成网络通信-：-阻塞式-、-非阻塞式" class="headerlink" title="3、 使用NIO完成网络通信 ： 阻塞式 、 非阻塞式"></a>3、 使用NIO完成网络通信 ： 阻塞式 、 非阻塞式</h4><p>Channel  +  Buffer  +  Client 演示 ， 环境为本机 + 虚拟机 ，端口信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Client  ip: 192.168.31.90</span><br><span class="line">Server ip : 192.168.31.134</span><br><span class="line">server port: 9999</span><br></pre></td></tr></table></figure>
+
+<p>1) 阻塞式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;-----------client--------------</span><br><span class="line">&#x2F;**</span><br><span class="line">     * 阻塞式IO</span><br><span class="line">     * 发送 C:\Users\Alex\Desktop\集合框架.gif</span><br><span class="line">     * 到 server</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public void client() throws IOException &#123;</span><br><span class="line">        SocketChannel sChannel &#x3D; SocketChannel.open(new InetSocketAddress(&quot;192.168.31.134&quot;,9999));</span><br><span class="line"></span><br><span class="line">        FileChannel inChannel &#x3D; FileChannel.open(Paths.get(&quot;C:\\Users\\Alex\\Desktop\\集合框架.gif&quot;), StandardOpenOption.READ);</span><br><span class="line"></span><br><span class="line">        ByteBuffer buf &#x3D; ByteBuffer.allocate(1024);</span><br><span class="line"></span><br><span class="line">        while (inChannel.read(buf) !&#x3D; -1)&#123;</span><br><span class="line">            buf.flip();</span><br><span class="line">            sChannel.write(buf);</span><br><span class="line">            buf.clear();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        inChannel.close();</span><br><span class="line">        sChannel.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;-----------server--------------</span><br><span class="line"></span><br><span class="line">public void server() throws IOException &#123;</span><br><span class="line">        ServerSocketChannel ssChannel &#x3D; ServerSocketChannel.open();</span><br><span class="line">        FileChannel outChannel &#x3D; FileChannel.open(Paths.get(&quot;copy.gif&quot;), StandardOpenOption.WRITE, StandardOpenOption.CREATE);</span><br><span class="line">        &#x2F;&#x2F;bind server port</span><br><span class="line">        ssChannel.bind(new InetSocketAddress(9999));</span><br><span class="line"></span><br><span class="line">        ByteBuffer buf &#x3D; ByteBuffer.allocate(1024);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;get client Channel</span><br><span class="line">        SocketChannel sChannel &#x3D; ssChannel.accept();</span><br><span class="line"></span><br><span class="line">        while (sChannel.read(buf) !&#x3D; -1)&#123;</span><br><span class="line">            buf.flip();</span><br><span class="line">            outChannel.write(buf);</span><br><span class="line">            buf.clear();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ssChannel.close();</span><br><span class="line">        sChannel.close();</span><br><span class="line">        outChannel.close();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>2) 非阻塞式（这个demo可以作为聊天的模型框架，朴素Reactor模式）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;----------client----------------</span><br><span class="line">&#x2F;**</span><br><span class="line">     * 非阻塞式IO</span><br><span class="line">     * 发送 C:\Users\Alex\Desktop\集合框架.gif</span><br><span class="line">     * 到 server</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    public void client2() throws IOException &#123;</span><br><span class="line">        SocketChannel sChannel &#x3D; SocketChannel.open(new InetSocketAddress(&quot;192.168.31.134&quot;,9999));</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 切换到非阻塞模式</span><br><span class="line">        sChannel.configureBlocking(false);</span><br><span class="line">        ByteBuffer buf &#x3D; ByteBuffer.allocate(1024);</span><br><span class="line"></span><br><span class="line">        buf.put(new Date().toString().getBytes());</span><br><span class="line">        buf.flip();</span><br><span class="line">        sChannel.write(buf);</span><br><span class="line">        buf.clear();</span><br><span class="line"></span><br><span class="line">        sChannel.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;----------server----------------</span><br><span class="line"></span><br><span class="line">    public void server2() throws IOException&#123;</span><br><span class="line">        ServerSocketChannel ssChannel &#x3D; ServerSocketChannel.open();</span><br><span class="line">        &#x2F;&#x2F;每次得到channel ， 都需要将阻塞关闭</span><br><span class="line">        ssChannel.configureBlocking(false);</span><br><span class="line">        ssChannel.bind(new InetSocketAddress(9999));</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;!! 得到 selector , then 注册 channel 到选择器 </span><br><span class="line">        Selector selector &#x3D; Selector.open();</span><br><span class="line">        ssChannel.register(selector, SelectionKey.OP_ACCEPT);</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;轮询</span><br><span class="line">        while (selector.select() &gt; 0)&#123; &#x2F;&#x2F;通过Selector的select（）方法可以选择已经准备就绪的通道 </span><br><span class="line">            Iterator&lt;SelectionKey&gt; it &#x3D; selector.selectedKeys().iterator();</span><br><span class="line">            while (it.hasNext())&#123;</span><br><span class="line">                SelectionKey sk &#x3D; it.next();</span><br><span class="line">                if (sk.isAcceptable())&#123;</span><br><span class="line">                    SocketChannel sChannel &#x3D; ssChannel.accept();</span><br><span class="line">                    &#x2F;&#x2F;!!</span><br><span class="line">                    sChannel.configureBlocking(false);</span><br><span class="line">                    sChannel.register(selector, SelectionKey.OP_READ);</span><br><span class="line">                &#125;else if (sk.isReadable())&#123;</span><br><span class="line">                    SocketChannel sChannel &#x3D; (SocketChannel) sk.channel();</span><br><span class="line"></span><br><span class="line">                    ByteBuffer buf &#x3D; ByteBuffer.allocate(1024);</span><br><span class="line">                    int len &#x3D; 0;</span><br><span class="line">                    while ((len &#x3D; sChannel.read(buf)) &gt; 0)&#123;</span><br><span class="line">                        buf.flip();</span><br><span class="line">                        System.out.println(new String(buf.array(), 0, len));</span><br><span class="line">                        buf.clear();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                &#x2F;&#x2F;remove SelectionKey</span><br><span class="line">                it.remove();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>以上都是同步IO ， 异步IO使用AIO （Asynchronous IO）。</p>
+<h2 id="六、管道-pipe"><a href="#六、管道-pipe" class="headerlink" title="六、管道 pipe"></a>六、管道 pipe</h2><p>与channel类似 只不过 pipe 是单向的</p>
+<h2 id="七、Reactor模式"><a href="#七、Reactor模式" class="headerlink" title="七、Reactor模式"></a>七、Reactor模式</h2><h4 id="1、简介-1"><a href="#1、简介-1" class="headerlink" title="1、简介"></a>1、简介</h4><p>Reactor模式(反应器模式)是一种处理一个或多个客户端并发交付服务请求的事件设计模式。当请求抵达后，服务处理程序使用I/O多路复用策略，然后同步地派发这些请求至相关的请求处理程序。</p>
+<p>应用 Redis ， 以及上文的 非阻塞式 Demo。</p>
+<h4 id="2、优点"><a href="#2、优点" class="headerlink" title="2、优点"></a>2、优点</h4><p>1）响应快，不必为单个同步时间所阻塞，虽然Reactor本身依然是同步的；</p>
+<p>2）编程相对简单，可以最大程度的避免复杂的多线程及同步问题，并且避免了多线程/进程的切换开销；</p>
+<p>3）可扩展性，可以方便的通过增加Reactor实例个数来充分利用CPU资源；</p>
+<p>4）可复用性，reactor框架本身与具体事件处理逻辑无关，具有很高的复用性；</p>
+<hr>
+<p>参考 ：<br>视频教程 ： <a href="https://www.bilibili.com/video/BV14W411u7" target="_blank" rel="noopener">https://www.bilibili.com/video/BV14W411u7</a><br>selector ：<a href="https://www.cnblogs.com/snailclimb/p/9086334.html" target="_blank" rel="noopener">https://www.cnblogs.com/snailclimb/p/9086334.html</a></p>
+<p>reactor模式 ： <a href="https://www.cnblogs.com/crazymakercircle/p/9833847.html" target="_blank" rel="noopener">Reactor模式</a><br>NIO原理 ： <a href="https://www.cnblogs.com/crazymakercircle/p/10225159.html" target="_blank" rel="noopener">https://www.cnblogs.com/crazymakercircle/p/10225159.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java%E5%9F%BA%E7%A1%80/" rel="tag"># Java基础</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/07/%E8%85%BE%E8%AE%AF%E4%BA%91-Ubuntu-18-04-Redis%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" rel="prev" title="腾讯云 Ubuntu 18.04 Redis安装与配置">
+      <i class="fa fa-chevron-left"></i> 腾讯云 Ubuntu 18.04 Redis安装与配置
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/07/%E4%BA%86%E8%A7%A3jvm-%E4%B8%8E-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F/" rel="next" title="了解jvm 与 类的加载方式">
+      了解jvm 与 类的加载方式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#〇、前置知识"><span class="nav-number">1.</span> <span class="nav-text">〇、前置知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、什么是IO？"><span class="nav-number">1.0.1.</span> <span class="nav-text">1、什么是IO？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、什么Socket？"><span class="nav-number">1.0.2.</span> <span class="nav-text">2、什么Socket？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、什么是IO模型？"><span class="nav-number">1.0.3.</span> <span class="nav-text">3、什么是IO模型？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、热身：-遍历文件夹下所有文件（尽管-，这在WEB开发中没什么用-2333）"><span class="nav-number">1.0.4.</span> <span class="nav-text">4、热身： 遍历文件夹下所有文件（尽管 ，这在WEB开发中没什么用 2333）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、-传统io区别"><span class="nav-number">2.</span> <span class="nav-text">一、 传统io区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、NIO核心"><span class="nav-number">3.</span> <span class="nav-text">二、NIO核心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、-缓冲区-操作"><span class="nav-number">4.</span> <span class="nav-text">三、 缓冲区 操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、简介"><span class="nav-number">4.0.1.</span> <span class="nav-text">1、简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、管理方式"><span class="nav-number">4.0.2.</span> <span class="nav-text">2、管理方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、直接缓冲区与非直接缓冲区"><span class="nav-number">4.0.3.</span> <span class="nav-text">3、直接缓冲区与非直接缓冲区</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、通道（Channel）"><span class="nav-number">5.</span> <span class="nav-text">四、通道（Channel）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、常用实现类"><span class="nav-number">5.0.1.</span> <span class="nav-text">1、常用实现类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、获取通道"><span class="nav-number">5.0.2.</span> <span class="nav-text">2、获取通道</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、“通道-缓冲区”-完成文件复制-例：-直接缓冲区"><span class="nav-number">5.0.3.</span> <span class="nav-text">3、“通道 + 缓冲区” 完成文件复制 (例： 直接缓冲区)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、使用通道之间的数据传递-，简化操作"><span class="nav-number">5.0.4.</span> <span class="nav-text">4、使用通道之间的数据传递 ，简化操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、分散读取与聚集写入"><span class="nav-number">5.0.5.</span> <span class="nav-text">5、分散读取与聚集写入</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、-网络通信的阻塞与非阻塞"><span class="nav-number">6.</span> <span class="nav-text">五、 网络通信的阻塞与非阻塞</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、阻塞-IO"><span class="nav-number">6.0.1.</span> <span class="nav-text">1、阻塞 IO</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、非阻塞-NIO"><span class="nav-number">6.0.2.</span> <span class="nav-text">2、非阻塞 NIO</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、-使用NIO完成网络通信-：-阻塞式-、-非阻塞式"><span class="nav-number">6.0.3.</span> <span class="nav-text">3、 使用NIO完成网络通信 ： 阻塞式 、 非阻塞式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、管道-pipe"><span class="nav-number">7.</span> <span class="nav-text">六、管道 pipe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、Reactor模式"><span class="nav-number">8.</span> <span class="nav-text">七、Reactor模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、简介-1"><span class="nav-number">8.0.1.</span> <span class="nav-text">1、简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、优点"><span class="nav-number">8.0.2.</span> <span class="nav-text">2、优点</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">AlexLJS</p>
+  <div class="site-description" itemprop="description">个人博客，用于分享Web开发的学习笔记和一些碎碎念。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexLJS</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'XVYaOQpDVtyf9vS7gyGWKM50-gzGzoHsz',
+      appKey     : 'tNz39ks5A6xit3uRDjDHC7ci',
+      placeholder: "(*^__^*) 嘻嘻……",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
