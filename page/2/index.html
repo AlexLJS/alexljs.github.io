@@ -161,6 +161,522 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/07/07/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AlexLJS">
+      <meta itemprop="description" content="个人博客，用于分享Web开发的学习笔记和一些碎碎念。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexPub_2020">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/07/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/" class="post-title-link" itemprop="url">jvm运行时数据区</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-07 18:55:40" itemprop="dateCreated datePublished" datetime="2020-07-07T18:55:40+08:00">2020-07-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 00:23:24" itemprop="dateModified" datetime="2020-07-16T00:23:24+08:00">2020-07-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Jvm/" itemprop="url" rel="index"><span itemprop="name">Jvm</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/07/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/07/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>尚在整理</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/07/07/%E4%BA%86%E8%A7%A3jvm-%E4%B8%8E-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AlexLJS">
+      <meta itemprop="description" content="个人博客，用于分享Web开发的学习笔记和一些碎碎念。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexPub_2020">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/07/%E4%BA%86%E8%A7%A3jvm-%E4%B8%8E-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F/" class="post-title-link" itemprop="url">了解jvm 与 类的加载方式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-07 18:55:14" itemprop="dateCreated datePublished" datetime="2020-07-07T18:55:14+08:00">2020-07-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-14 11:31:40" itemprop="dateModified" datetime="2020-07-14T11:31:40+08:00">2020-07-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Jvm/" itemprop="url" rel="index"><span itemprop="name">Jvm</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/07/%E4%BA%86%E8%A7%A3jvm-%E4%B8%8E-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/07/%E4%BA%86%E8%A7%A3jvm-%E4%B8%8E-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>注：<br>本系列jvm笔记分三线记录 ： 正常文字笔记，穿插面试问题，再穿插jvm命令简介。尽量少说废话。</p>
+<hr>
+<h2 id="一、jvm简介"><a href="#一、jvm简介" class="headerlink" title="一、jvm简介"></a>一、jvm简介</h2><h3 id="1-开启与停止"><a href="#1-开启与停止" class="headerlink" title="1. 开启与停止"></a>1. 开启与停止</h3><p>jvm指的是 java 虚拟机 ， 每个jvm 启动时就开启一个进程。</p>
+<blockquote>
+<p>问题1：jvm什么时间退出？<br>答 ： 程序正常结束；程序异常或者错误；系统崩了；调用 Runtime.exit() 或者 System.exit() ， 或者 Runtime.halt() 。</p>
+</blockquote>
+<blockquote>
+<p>命令简介 ：<br>jps ： 打印当前程序执行中的进程。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println( &quot;hello world&quot;);</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(6000);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&gt; jps</span><br><span class="line"></span><br><span class="line">7090 Jps</span><br><span class="line">7048 Test</span><br><span class="line">2927 Main</span><br><span class="line">7039 Launcher</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/07/%E4%BA%86%E8%A7%A3jvm-%E4%B8%8E-%E7%B1%BB%E7%9A%84%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/07/07/NIO-%E4%B8%8E-Reactor%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AlexLJS">
+      <meta itemprop="description" content="个人博客，用于分享Web开发的学习笔记和一些碎碎念。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexPub_2020">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/07/NIO-%E4%B8%8E-Reactor%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">NIO 与 Reactor模式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-07 18:54:25" itemprop="dateCreated datePublished" datetime="2020-07-07T18:54:25+08:00">2020-07-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-08 17:43:12" itemprop="dateModified" datetime="2020-07-08T17:43:12+08:00">2020-07-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/07/NIO-%E4%B8%8E-Reactor%E6%A8%A1%E5%BC%8F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/07/NIO-%E4%B8%8E-Reactor%E6%A8%A1%E5%BC%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>不喜欢太多高大上的理论，记不住……</p>
+<h2 id="〇、前置知识"><a href="#〇、前置知识" class="headerlink" title="〇、前置知识"></a>〇、前置知识</h2><h4 id="1、什么是IO？"><a href="#1、什么是IO？" class="headerlink" title="1、什么是IO？"></a>1、什么是IO？</h4><p>答：io ， input，output 。 一句话，<strong>IO就是为了完成数据传输</strong>。 指的是，完成程序与其他载体的数据传输，可以是硬盘、进程、缓存等。 因为完成程序与其他载体， 程序为本体，往程序里面写是in， 往外部写是out。<br>（其实，进程缓冲区 和 内核缓冲区分别“挡”在内存和硬盘前面， IO操作先写缓冲区。再由内核将缓冲区写入硬盘…）</p>
+<h4 id="2、什么Socket？"><a href="#2、什么Socket？" class="headerlink" title="2、什么Socket？"></a>2、什么Socket？</h4><p>答 ： 哎，我一直说不清 。 只知道， Socket是两个进程之间双向通信的方式，支持不同的通信协议TCP UDP，表示方式 ： IP地址 + 端口号。 说是可以看成两个进程通信的端点，然后里面还能放入数据！ </p>
+<h4 id="3、什么是IO模型？"><a href="#3、什么是IO模型？" class="headerlink" title="3、什么是IO模型？"></a>3、什么是IO模型？</h4><p>答：指的是Linux系统IO模型。分为阻塞IO、非阻塞IO、多路复用IO、信号驱动IO以及异步IO。这里的同步/异步、阻塞/非阻塞针对的都是用户程序。（<a href="https://www.cnblogs.com/crazymakercircle/p/10225159.html" target="_blank" rel="noopener">此文</a>对于同步异步的解释是有偏差的，我更倾向于下面这种解释，程序缓冲区是由 <em>程序接收系统内核数据，由程序写入完成IO操作就应该是同步IO；如果是系统内核准备好数据写进程序缓冲区，再通知程序，那么这次IO是由系统完成的，程序线程可以做其他操作，应该算异步IO</em> ）</p>
+<blockquote>
+<p>实际IO操作由应用程序本身执行，会阻塞线程就是同步IO。反之由操作系统完成就是异步IO。（《疯狂java》）</p>
+</blockquote>
+<p>简述一下，linux系统的虚拟内存空间被划分为两部分： <strong>内核内存空间与用户内存空间</strong>。这里的用户空间就是运行的程序进程， 由于<strong>内核与用户空间的数据交换非常费时</strong>， 所以在两部分分别设置了缓冲区。用户的缓冲区是IO库用buffer优化的，而内核的buffer是自带的，并且内核向硬盘的写入操作是我们不能控制的。所谓的Linux IO模型就是在内核空间与用户空间的数据交换时起作用。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/07/NIO-%E4%B8%8E-Reactor%E6%A8%A1%E5%BC%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/07/07/%E8%85%BE%E8%AE%AF%E4%BA%91-Ubuntu-18-04-Redis%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AlexLJS">
+      <meta itemprop="description" content="个人博客，用于分享Web开发的学习笔记和一些碎碎念。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexPub_2020">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/07/%E8%85%BE%E8%AE%AF%E4%BA%91-Ubuntu-18-04-Redis%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">腾讯云 Ubuntu 18.04 Redis安装与配置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-07-07 17:39:22 / 修改时间：17:41:37" itemprop="dateCreated datePublished" datetime="2020-07-07T17:39:22+08:00">2020-07-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/07/%E8%85%BE%E8%AE%AF%E4%BA%91-Ubuntu-18-04-Redis%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/07/%E8%85%BE%E8%AE%AF%E4%BA%91-Ubuntu-18-04-Redis%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>参考教程 ：<a href="https://cloud.tencent.com/developer/article/1163860" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1163860</a></p>
+<p>官方网站：<a href="http://www.redis.cn/" target="_blank" rel="noopener">http://www.redis.cn/</a></p>
+<h2 id="一-、-过程中遇到的坑"><a href="#一-、-过程中遇到的坑" class="headerlink" title="一 、 过程中遇到的坑"></a>一 、 过程中遇到的坑</h2><p>虽然初学Redis，总的来说 Redis 安装配置基本没坑，可以不用docker。</p>
+<ol>
+<li>redis配置文件（<code>/etc/redis/redis.conf</code>）有一千多行 ，我吐了！定位需要的位置：</li>
+</ol>
+<p>1） <code>grep -rn &quot;dbfilename&quot;  /etc/redis/redis.conf</code> 定位 dbfilename 在哪行。<br>2） vim  ： <code>:n</code> 跳到第n行</p>
+<p>或者参考conf ： <a href="http://download.redis.io/redis-stable/redis.conf" target="_blank" rel="noopener">http://download.redis.io/redis-stable/redis.conf</a></p>
+<ol start="2">
+<li>可以顺利完成安装，启动服务，记下常用文件位置，方便后续调整使用。 </li>
+</ol>
+<p>配置文件位置： /etc/redis/redis.conf</p>
+<p>dump的rdb文件位置： /var/lib/redis</p>
+<p>redis性能测试 ： /usr/local/bin/redis-benchmark</p>
+<ol start="3">
+<li>第二台服务器 make test ，第53项报错，错误信息如下：</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/07/%E8%85%BE%E8%AE%AF%E4%BA%91-Ubuntu-18-04-Redis%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/07/06/Redis-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AlexLJS">
+      <meta itemprop="description" content="个人博客，用于分享Web开发的学习笔记和一些碎碎念。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexPub_2020">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/06/Redis-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">Redis 数据类型常用命令</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-06 00:13:54" itemprop="dateCreated datePublished" datetime="2020-07-06T00:13:54+08:00">2020-07-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-07 17:41:54" itemprop="dateModified" datetime="2020-07-07T17:41:54+08:00">2020-07-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/06/Redis-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/06/Redis-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>命令查询中文文档 ： <a href="http://www.redis.cn/commands.html" target="_blank" rel="noopener">http://www.redis.cn/commands.html</a></p>
+<p>换库 ： select [dbIndex]</p>
+<h2 id="一、Key"><a href="#一、Key" class="headerlink" title="一、Key"></a>一、Key</h2><ol>
+<li><p>查看key：<code>keys [pattern]</code><br>不建议使用<code>keys *</code> 查看所有Keys。建议正则匹配， 如 <code>keys t*</code> </p>
+</li>
+<li><p>添加元素： <code>set [key] [value]</code><br>发生冲突则覆盖</p>
+</li>
+<li><p>取得元素： <code>get [key]</code></p>
+</li>
+<li><p>判断key是否存在： <code>EXISTS [key]</code><br>存在返回 integer 1， 否则 0</p>
+</li>
+<li><p>移动key到某个数据库： <code>move [key] [dbIndex]</code></p>
+</li>
+<li><p>设置key过期时间： <code>expire [key] [seconds]</code><br>秒为单位设置key的过期时间， 已过期则移除DB</p>
+</li>
+<li><p>查看key还有多少秒过期： <code>ttl [key]</code></p>
+</li>
+</ol>
+<p>-1 表示永不过期， -2 表示已经过期</p>
+<ol start="8">
+<li><p>查看key是什么类型： <code>type [key]</code></p>
+</li>
+<li><p>删除key ： <code>del [key]</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/06/Redis-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/07/05/%E6%9D%82%E8%AE%B0-Java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -382,10 +898,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-07-04 12:00:08 / 修改时间：12:54:57" itemprop="dateCreated datePublished" datetime="2020-07-04T12:00:08+08:00">2020-07-04</time>
+              <time title="创建时间：2020-07-04 12:00:08" itemprop="dateCreated datePublished" datetime="2020-07-04T12:00:08+08:00">2020-07-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-01 02:18:51" itemprop="dateModified" datetime="2020-08-01T02:18:51+08:00">2020-08-01</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -421,7 +943,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><img src="https://upload-images.jianshu.io/upload_images/15578361-b87503403d62f430.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="题目.png"></p>
+          <p>OJ 地址 <a href="https://www.nowcoder.com/ta/coding-interviews" target="_blank" rel="noopener">https://www.nowcoder.com/ta/coding-interviews</a></p>
+<p>此次刷题是二刷剑指Offer， 优化了代码并且针对每道题都写了思路。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/15578361-b87503403d62f430.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="题目.png"></p>
 <p>1、</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">package Offer;</span><br><span class="line"></span><br><span class="line">public class FindInMatrix_1 &#123;</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 第一题 ：</span><br><span class="line">     *</span><br><span class="line">     * 在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，</span><br><span class="line">     * 每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，</span><br><span class="line">     * 判断数组中是否含有该整数。</span><br><span class="line">     *</span><br><span class="line">     * 思路 ：</span><br><span class="line">     *</span><br><span class="line">     * 左上角开始向下搜寻</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public boolean Find(int target, int [][] array) &#123;</span><br><span class="line">        int i &#x3D; 0;</span><br><span class="line">        int j &#x3D; array[i].length - 1;</span><br><span class="line"></span><br><span class="line">        while(i &lt; array.length &amp;&amp; j &gt;&#x3D; 0)&#123;</span><br><span class="line">            if (array[i][j] &#x3D;&#x3D; target) &#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;else if(array[i][j] &lt; target)&#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
@@ -710,7 +1234,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

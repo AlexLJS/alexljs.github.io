@@ -20,22 +20,20 @@
     var CONFIG = {"hostname":"alexljs.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="参考教程 ：https:&#x2F;&#x2F;cloud.tencent.com&#x2F;developer&#x2F;article&#x2F;1163860 官方网站：http:&#x2F;&#x2F;www.redis.cn&#x2F; 一 、 过程中遇到的坑虽然初学Redis，总的来说 Redis 安装配置基本没坑，可以不用docker。  redis配置文件（&#x2F;etc&#x2F;redis&#x2F;redis.conf）有一千多行 ，我吐了！定位需要的位置：  1） grep -">
+  <meta name="description" content="剑指Offer中有一道题 ：表示数值的字符串   题目描述请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串”+100”,”5e2”,”-123”,”3.1416”和”-1E-16”都表示数值。 但是”12e”,”1a3.14”,”1.2.3”,”+-5”和”12e+4.3”都不是。  第一感觉就是正则，因为写if判断太繁琐了。 ^[+-]?([0-9]+(\.[0-9]*)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="腾讯云 Ubuntu 18.04 Redis安装与配置">
-<meta property="og:url" content="http://alexljs.com/2020/07/07/%E8%85%BE%E8%AE%AF%E4%BA%91-Ubuntu-18-04-Redis%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/index.html">
+<meta property="og:title" content="杂记 Java正则表达式">
+<meta property="og:url" content="http://alexljs.com/2020/07/27/%E6%9D%82%E8%AE%B0-Java%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
 <meta property="og:site_name" content="AlexPub_2020">
-<meta property="og:description" content="参考教程 ：https:&#x2F;&#x2F;cloud.tencent.com&#x2F;developer&#x2F;article&#x2F;1163860 官方网站：http:&#x2F;&#x2F;www.redis.cn&#x2F; 一 、 过程中遇到的坑虽然初学Redis，总的来说 Redis 安装配置基本没坑，可以不用docker。  redis配置文件（&#x2F;etc&#x2F;redis&#x2F;redis.conf）有一千多行 ，我吐了！定位需要的位置：  1） grep -">
+<meta property="og:description" content="剑指Offer中有一道题 ：表示数值的字符串   题目描述请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串”+100”,”5e2”,”-123”,”3.1416”和”-1E-16”都表示数值。 但是”12e”,”1a3.14”,”1.2.3”,”+-5”和”12e+4.3”都不是。  第一感觉就是正则，因为写if判断太繁琐了。 ^[+-]?([0-9]+(\.[0-9]*)">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/15578361-f21d8bb3d7bea688.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="article:published_time" content="2020-07-07T09:39:22.000Z">
-<meta property="article:modified_time" content="2020-07-07T09:41:37.573Z">
+<meta property="article:published_time" content="2020-07-27T04:33:18.000Z">
+<meta property="article:modified_time" content="2020-07-27T04:35:25.423Z">
 <meta property="article:author" content="AlexLJS">
-<meta property="article:tag" content="Redis">
+<meta property="article:tag" content="Java基础">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/15578361-f21d8bb3d7bea688.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
-<link rel="canonical" href="http://alexljs.com/2020/07/07/%E8%85%BE%E8%AE%AF%E4%BA%91-Ubuntu-18-04-Redis%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">
+<link rel="canonical" href="http://alexljs.com/2020/07/27/%E6%9D%82%E8%AE%B0-Java%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
 
 
 <script id="page-configurations">
@@ -48,7 +46,7 @@
   };
 </script>
 
-  <title>腾讯云 Ubuntu 18.04 Redis安装与配置 | AlexPub_2020</title>
+  <title>杂记 Java正则表达式 | AlexPub_2020</title>
   
 
 
@@ -164,7 +162,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/07/07/%E8%85%BE%E8%AE%AF%E4%BA%91-Ubuntu-18-04-Redis%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">
+    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/07/27/%E6%9D%82%E8%AE%B0-Java%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -177,7 +175,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          腾讯云 Ubuntu 18.04 Redis安装与配置
+          杂记 Java正则表达式
         </h1>
 
         <div class="post-meta">
@@ -188,7 +186,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-07-07 17:39:22 / 修改时间：17:41:37" itemprop="dateCreated datePublished" datetime="2020-07-07T17:39:22+08:00">2020-07-07</time>
+              <time title="创建时间：2020-07-27 12:33:18 / 修改时间：12:35:25" itemprop="dateCreated datePublished" datetime="2020-07-27T12:33:18+08:00">2020-07-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -196,7 +194,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
                 </span>
             </span>
 
@@ -209,8 +207,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/07/07/%E8%85%BE%E8%AE%AF%E4%BA%91-Ubuntu-18-04-Redis%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/07/%E8%85%BE%E8%AE%AF%E4%BA%91-Ubuntu-18-04-Redis%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/07/27/%E6%9D%82%E8%AE%B0-Java%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/27/%E6%9D%82%E8%AE%B0-Java%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -225,60 +223,62 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>参考教程 ：<a href="https://cloud.tencent.com/developer/article/1163860" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1163860</a></p>
-<p>官方网站：<a href="http://www.redis.cn/" target="_blank" rel="noopener">http://www.redis.cn/</a></p>
-<h2 id="一-、-过程中遇到的坑"><a href="#一-、-过程中遇到的坑" class="headerlink" title="一 、 过程中遇到的坑"></a>一 、 过程中遇到的坑</h2><p>虽然初学Redis，总的来说 Redis 安装配置基本没坑，可以不用docker。</p>
-<ol>
-<li>redis配置文件（<code>/etc/redis/redis.conf</code>）有一千多行 ，我吐了！定位需要的位置：</li>
-</ol>
-<p>1） <code>grep -rn &quot;dbfilename&quot;  /etc/redis/redis.conf</code> 定位 dbfilename 在哪行。<br>2） vim  ： <code>:n</code> 跳到第n行</p>
-<p>或者参考conf ： <a href="http://download.redis.io/redis-stable/redis.conf" target="_blank" rel="noopener">http://download.redis.io/redis-stable/redis.conf</a></p>
-<ol start="2">
-<li>可以顺利完成安装，启动服务，记下常用文件位置，方便后续调整使用。 </li>
-</ol>
-<p>配置文件位置： /etc/redis/redis.conf</p>
-<p>dump的rdb文件位置： /var/lib/redis</p>
-<p>redis性能测试 ： /usr/local/bin/redis-benchmark</p>
-<ol start="3">
-<li>第二台服务器 make test ，第53项报错，错误信息如下：</li>
-</ol>
+        <p>剑指Offer中有一道题 ：表示数值的字符串 </p>
+<blockquote>
+<p>题目描述<br>请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串”+100”,”5e2”,”-123”,”3.1416”和”-1E-16”都表示数值。 但是”12e”,”1a3.14”,”1.2.3”,”+-5”和”12e+4.3”都不是。</p>
+</blockquote>
+<p>第一感觉就是正则，因为写if判断太繁琐了。</p>
+<p><code>^[+-]?([0-9]+(\.[0-9]*)?|\.[0-9]+)([eE][+-]?[0-9]+)?$</code></p>
+<p>这条reg 涵盖了日常开发的常用写法， 就以这条为例，复习一下Java中的正则表达式。<br>（注意java中 \ 需要 \\ 双倍）</p>
+<hr>
+<h2 id="一、-使用方式"><a href="#一、-使用方式" class="headerlink" title="一、 使用方式"></a>一、 使用方式</h2><p>正则表达式也是个String ，下文用 regex 表示正则的Pattern String。</p>
+<h4 id="1-String-字符串相关"><a href="#1-String-字符串相关" class="headerlink" title="1. String 字符串相关"></a>1. String 字符串相关</h4><p>matches(regex) 匹配，返回boolean</p>
+<p>split(regex) 切割，返回String[]</p>
+<p>replaceAll(regex,String) 替换，返回String</p>
 <a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[err]: diskless no replicas drop during rdb pipe in tests&#x2F;integration&#x2F;replication.tcl</span><br><span class="line">rdb child didn&#39;t terminate</span><br></pre></td></tr></table></figure>
-<p>查看 tests/integration/replication.tcl ，报错位置：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># test diskless rdb pipe with multiple replicas, which may drop half way</span><br><span class="line">start_server &#123;tags &#123;&quot;repl&quot;&#125;&#125; &#123;</span><br><span class="line">    set master [srv 0 client]</span><br><span class="line">    $master config set repl-diskless-sync yes</span><br><span class="line">    $master config set repl-diskless-sync-delay 1</span><br><span class="line">    set master_host [srv 0 host]</span><br><span class="line">    set master_port [srv 0 port]</span><br><span class="line">    set master_pid [srv 0 pid]</span><br><span class="line">...</span><br><span class="line"> # wait for rdb child to exit</span><br><span class="line">                    wait_for_condition 500 100 &#123;</span><br><span class="line">                        [s -2 rdb_bgsave_in_progress] &#x3D;&#x3D; 0</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        fail &quot;rdb child didn&#39;t terminate&quot;</span><br><span class="line">                    &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>本人才疏学浅，查了好久也没解决这个问题。 <strong>发现跳过这个问题，后续安装可以继续执行，不受影响。</strong></p>
-<h2 id="二、配置常识"><a href="#二、配置常识" class="headerlink" title="二、配置常识"></a>二、配置常识</h2><ol>
-<li>systemd 是什么 ？  </li>
+<h4 id="2-Pattern-类"><a href="#2-Pattern-类" class="headerlink" title="2. Pattern 类"></a>2. Pattern 类</h4><p><code>import java.util.regex.Pattern;</code></p>
+<p>Pattern.matches(regex) 同 String.matches</p>
+<p>Pattern.compile(regex) 编译正则表达式，返回 Pattern 对象， 实际使用中需要搭配 Matcher</p>
+<p><code>Matcher m = p.matcher(str);</code></p>
+<h4 id="3-Matcher"><a href="#3-Matcher" class="headerlink" title="3. Matcher"></a>3. Matcher</h4><p>常用 find() 和 group()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Pattern p&#x3D;Pattern.compile(&quot;\\d+&quot;); </span><br><span class="line">Matcher m&#x3D;p.matcher(&quot;22bb23&quot;); </span><br><span class="line">m.find();&#x2F;&#x2F;返回true </span><br><span class="line">Matcher m2&#x3D;p.matcher(&quot;aa2223&quot;); </span><br><span class="line">m2.find();&#x2F;&#x2F;返回true </span><br><span class="line">Matcher m3&#x3D;p.matcher(&quot;aa2223bb&quot;); </span><br><span class="line">m3.find();&#x2F;&#x2F;返回true </span><br><span class="line">Matcher m4&#x3D;p.matcher(&quot;aabb&quot;); </span><br><span class="line">m4.find();&#x2F;&#x2F;返回false</span><br><span class="line">&#x2F;&#x2F;---------------------</span><br><span class="line">Pattern p&#x3D;Pattern.compile(&quot;\\d+&quot;); </span><br><span class="line">Matcher m&#x3D;p.matcher(&quot;我的QQ是:456456 我的电话是:0532214 我的邮箱是:aaa123@aaa.com&quot;); </span><br><span class="line">while(m.find()) &#123; </span><br><span class="line">     System.out.println(m.group()); </span><br><span class="line">&#125; </span><br><span class="line">&#x2F;&#x2F;-----------------------</span><br><span class="line">456456 </span><br><span class="line">0532214 </span><br><span class="line">123</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h2 id="二、-正则规则"><a href="#二、-正则规则" class="headerlink" title="二、 正则规则"></a>二、 正则规则</h2><p>正则规则建议自己百度。<br><a href="https://www.runoob.com/java/java-regular-expressions.html" target="_blank" rel="noopener">https://www.runoob.com/java/java-regular-expressions.html</a></p>
+<p>这里举例开头提到的字符串：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^[+-]?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)([eE][+-]?[0-9]+)?$</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>^ 正则匹配的开始</p>
+</li>
+<li><p>$ 正则匹配的结束</p>
+</li>
+<li><p>[] 匹配一个字符</p>
+</li>
+<li><p>. 可以匹配任何字符</p>
+</li>
+<li><p>*  表示 0个 或 多个</p>
+</li>
+<li><p>? 表示 0个 或 1个</p>
+</li>
+<li><p>() 捕获组：表示子正则表达式，看作一个整体</p>
+</li>
+<li><p>{} 用来限制个数</p>
+</li>
+<li><p>＋表示 １个 或 多个</p>
+</li>
 </ol>
-<blockquote>
-<p>（百度百科 ） systemd即为system daemon,是linux下的一种init软件,由Lennart Poettering带头开发,并在LGPL 2.1及其后续版本许可证下开源发布,开发目标是提供更优秀的框架以表示系统服务间的依赖关系，并依此实现系统初始化时服务的并行启动，同时达到降低Shell的系统开销的效果，最终代替常用的System V与BSD风格init程序。</p>
-</blockquote>
-<p>配置systemd ， 就不用配置守护线程来保证Redis在后台实时拉起。</p>
-<blockquote>
-<p>当redis.conf中选项daemonize设置成yes时，代表开启守护进程模式。在该模式下，redis会在后台运行，并将进程pid号写入至redis.conf选项pidfile设置的文件中，此时redis将一直运行，除非手动kill该进程。</p>
-</blockquote>
-<ol start="2">
-<li>为何给redis 权限组？如何多个redis服务？ </li>
-</ol>
-<p>出于安全考虑。<br>systemd 配置文件位置 /etc/systemd/system/redis.service 。<br>添加 service服务，并为多个redis服务配置不同的config 文件。</p>
-<h2 id="三、redis-常识"><a href="#三、redis-常识" class="headerlink" title="三、redis 常识"></a>三、redis 常识</h2><ol>
-<li>redis的线程模型原简介  ： (问题 ： 介绍一下 Redis 单线程模型 ？)</li>
-</ol>
-<p>答 ： redis 的 文件时间处理器 （file event handler）包含四个部分 ：<br>1）多个套接字<br>2）IO多路复用程序<br>3）文件事件分派器<br>4）事件处理器 （单线程）</p>
-<p>文件事件处理器是单线程的 ， 所以Redis称为单线程模型。（或者说是文件事件分派器的消费是单线程的）</p>
-<p>注 ： redis处理请求流程 ：<br><img src="https://upload-images.jianshu.io/upload_images/15578361-f21d8bb3d7bea688.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="文件事件处理器.png"></p>
-<blockquote>
-<p>消息处理流程 ： 文件事件处理器使用I/O多路复用(multiplexing)程序来同时监听多个套接字，并根据套接字目前执行的任务来为套接字关联不同的事件处理器。当被监听的套接字准备好执行连接应答(accept)、读取(read)、写入(write)、关闭(close)等操作时，与操作相对应的文件事件就会产生，这时文件事件处理器就会调用套接字之前关联好的事件处理器来处理这些事件。<a href="https://www.jianshu.com/p/6264fa82ac33" target="_blank" rel="noopener">参考</a></p>
-</blockquote>
-<p>单线程模型大差不差都是维护一个事件queue。参考Nodejs 单线程异步。</p>
-<ol start="2">
-<li>常见面试题 ： 为何单线程模型的 Redis 速度快？　</li>
-</ol>
-<p>答 ：<br>IO多路复用技术，<br>在内存中完成操作，省去大部分与硬盘的IO消耗。<br>单线程，省去多线程的竞争资源消耗。 </p>
-<ol start="3">
-<li>epoll IO多路复用</li>
-</ol>
-<p>不太理解 <a href="https://blog.csdn.net/wxy941011/article/details/80274233" target="_blank" rel="noopener">https://blog.csdn.net/wxy941011/article/details/80274233</a></p>
+<p>也可以写逻辑判断， 就不再赘述。正则表达式很强大，例如，上题判断科学第一个因数的合法性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">([0-9]+(\\.[0-9]*)?|\\.[0-9]+)</span><br></pre></td></tr></table></figure>
+
+<p>表示： 有整数部分的话，小数部分可以有可以没有，但只能存在一组 ； 没整数部分的话，小数部分至少有一个数字。<br>写if 判断会非常复杂， regex写起来也很困难需要在线测试工具。</p>
+<hr>
+<h2 id="三、常用正则"><a href="#三、常用正则" class="headerlink" title="三、常用正则"></a>三、常用正则</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Email地址：^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$</span><br><span class="line"></span><br><span class="line">域名：[a-zA-Z0-9][-a-zA-Z0-9]&#123;0,62&#125;(\.[a-zA-Z0-9][-a-zA-Z0-9]&#123;0,62&#125;)+\.?</span><br><span class="line"></span><br><span class="line">InternetURL：[a-zA-z]+:&#x2F;&#x2F;[^\s]* 或 ^http:&#x2F;&#x2F;([\w-]+\.)+[\w-]+(&#x2F;[\w-.&#x2F;?%&amp;&#x3D;]*)?$</span><br><span class="line"></span><br><span class="line">手机号码：^(13[0-9]|14[5|7]|15[0|1|2|3|4|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d&#123;8&#125;$</span><br></pre></td></tr></table></figure>
+
+<p>详见工具推荐网址，具体业务酌情修改。</p>
+<hr>
+<h2 id="四、工具推荐"><a href="#四、工具推荐" class="headerlink" title="四、工具推荐"></a>四、工具推荐</h2><p><a href="https://c.runoob.com/front-end/854" target="_blank" rel="noopener">https://c.runoob.com/front-end/854</a></p>
 
     </div>
 
@@ -288,7 +288,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Redis/" rel="tag"># Redis</a>
+              <a href="/tags/Java%E5%9F%BA%E7%A1%80/" rel="tag"># Java基础</a>
           </div>
 
         
@@ -297,12 +297,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/07/06/Redis-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="prev" title="Redis 数据类型常用命令">
-      <i class="fa fa-chevron-left"></i> Redis 数据类型常用命令
+    <a href="/2020/07/24/%E6%9D%82%E8%AE%B0-Java%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" rel="prev" title="杂记 Java代理模式">
+      <i class="fa fa-chevron-left"></i> 杂记 Java代理模式
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/07/07/NIO-%E4%B8%8E-Reactor%E6%A8%A1%E5%BC%8F/" rel="next" title="NIO 与 Reactor模式">
-      NIO 与 Reactor模式 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/07/30/12-3-%E5%89%91%E6%8C%87Offer-23-40/" rel="next" title="12.3 剑指Offer 23-40">
+      12.3 剑指Offer 23-40 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -363,7 +363,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-、-过程中遇到的坑"><span class="nav-number">1.</span> <span class="nav-text">一 、 过程中遇到的坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、配置常识"><span class="nav-number">2.</span> <span class="nav-text">二、配置常识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、redis-常识"><span class="nav-number">3.</span> <span class="nav-text">三、redis 常识</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、-使用方式"><span class="nav-number">1.</span> <span class="nav-text">一、 使用方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-String-字符串相关"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. String 字符串相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Pattern-类"><span class="nav-number">1.0.2.</span> <span class="nav-text">2. Pattern 类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Matcher"><span class="nav-number">1.0.3.</span> <span class="nav-text">3. Matcher</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、-正则规则"><span class="nav-number">2.</span> <span class="nav-text">二、 正则规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、常用正则"><span class="nav-number">3.</span> <span class="nav-text">三、常用正则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、工具推荐"><span class="nav-number">4.</span> <span class="nav-text">四、工具推荐</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

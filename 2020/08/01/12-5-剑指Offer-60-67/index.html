@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"alexljs.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="60、 123456789101112131415161718192021222324252627282930313233343536373839404142public class FloorPrintTree_60 &amp;#123;    &#x2F;**     * 把二叉树打印成多行     *     * 题目描述     * 从上到下按层打印二叉树，同一层结点从左至右输出。     * 每">
+<meta property="og:type" content="article">
+<meta property="og:title" content="12.5 剑指Offer 60-67">
+<meta property="og:url" content="http://alexljs.com/2020/08/01/12-5-%E5%89%91%E6%8C%87Offer-60-67/index.html">
+<meta property="og:site_name" content="AlexPub_2020">
+<meta property="og:description" content="60、 123456789101112131415161718192021222324252627282930313233343536373839404142public class FloorPrintTree_60 &amp;#123;    &#x2F;**     * 把二叉树打印成多行     *     * 题目描述     * 从上到下按层打印二叉树，同一层结点从左至右输出。     * 每">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-07-31T18:16:47.000Z">
+<meta property="article:modified_time" content="2020-07-31T18:20:14.424Z">
+<meta property="article:author" content="AlexLJS">
+<meta property="article:tag" content="offer">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://alexljs.com/2020/08/01/12-5-%E5%89%91%E6%8C%87Offer-60-67/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>12.5 剑指Offer 60-67 | AlexPub_2020</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexPub_2020</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">明知不可能而为之，才能感觉自己活着。图片不显示请用Chrome访问，Email：alexljs@outlook.com</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/08/01/12-5-%E5%89%91%E6%8C%87Offer-60-67/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AlexLJS">
+      <meta itemprop="description" content="个人博客，用于分享Web开发的学习笔记和一些碎碎念。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexPub_2020">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          12.5 剑指Offer 60-67
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-08-01 02:16:47 / 修改时间：02:20:14" itemprop="dateCreated datePublished" datetime="2020-08-01T02:16:47+08:00">2020-08-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/08/01/12-5-%E5%89%91%E6%8C%87Offer-60-67/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/01/12-5-%E5%89%91%E6%8C%87Offer-60-67/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>60、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">public class FloorPrintTree_60 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 把二叉树打印成多行</span><br><span class="line">     *</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 从上到下按层打印二叉树，同一层结点从左至右输出。</span><br><span class="line">     * 每一层输出一行。</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     * 层序遍历二叉树， 前面也已经用过很多次了。</span><br><span class="line">     * mark Node 标记一下何时换行就OK了</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; Print(TreeNode pRoot) &#123;</span><br><span class="line">        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res &#x3D; new ArrayList&lt;&gt;();</span><br><span class="line">        if (pRoot &#x3D;&#x3D; null) return res;</span><br><span class="line">        TreeNode cur &#x3D; pRoot;</span><br><span class="line">        TreeNode mark &#x3D; new TreeNode(0);</span><br><span class="line">        Queue&lt;TreeNode&gt; queue &#x3D; new LinkedList&lt;&gt;();</span><br><span class="line">        ArrayList&lt;Integer&gt; floor &#x3D; new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        queue.add(cur);</span><br><span class="line">        queue.add(mark);</span><br><span class="line"></span><br><span class="line">        while (!queue.isEmpty())&#123;</span><br><span class="line">            TreeNode tmp &#x3D; queue.poll();</span><br><span class="line">            if (tmp &#x3D;&#x3D; mark)&#123;</span><br><span class="line">                res.add(floor);</span><br><span class="line">                if (queue.isEmpty()) return res;</span><br><span class="line">                floor &#x3D; new ArrayList&lt;&gt;();</span><br><span class="line">                queue.add(mark);</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                floor.add(tmp.val);</span><br><span class="line">                if (tmp.left !&#x3D; null) queue.add(tmp.left);</span><br><span class="line">                if (tmp.right !&#x3D; null) queue.add(tmp.right);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>61、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">public class SerializeTree_61 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 序列化二叉树</span><br><span class="line">     *</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 请实现两个函数，分别用来序列化和反序列化二叉树</span><br><span class="line">     *</span><br><span class="line">     * 二叉树的序列化是指：</span><br><span class="line">     * 把一棵二叉树按照某种遍历方式的结果以某种格式保存为字符串，</span><br><span class="line">     * 从而使得内存中建立起来的二叉树可以持久保存。序列化可以基于先序、中序、后序、层序的二叉树遍历方式来进行修改，</span><br><span class="line">     * 序列化的结果是一个字符串，序列化时通过 某种符号表示空节点（#），以 ！ 表示一个结点值的结束（value!）。</span><br><span class="line">     *</span><br><span class="line">     * 二叉树的反序列化是指：根据某种遍历顺序得到的序列化字符串结果str，重构二叉树。*</span><br><span class="line">     * 例如，我们可以把一个只有根节点为1的二叉树序列化为&quot;1,&quot;，然后通过自己的函数来解析回这个二叉树</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     * 层序遍历太复杂，推荐使用先序遍历， 因为先序遍历 方便查找头结点。</span><br><span class="line">     * 必会题目。</span><br><span class="line">     *</span><br><span class="line">     * 注： 用 -&gt; 效率很低</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    public String Serialize(TreeNode root) &#123;</span><br><span class="line">        return proSe(root);</span><br><span class="line">    &#125;</span><br><span class="line">    private String proSe(TreeNode root)&#123;</span><br><span class="line">        if (root &#x3D;&#x3D; null) return &quot;#&quot;;</span><br><span class="line">        return root.val + &quot;!&quot; + proSe(root.left) + &quot;!&quot; + proSe(root.right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public TreeNode Deserialize(String str) &#123;</span><br><span class="line">        String[] s &#x3D; str.split(&quot;!&quot;);</span><br><span class="line">        Queue&lt;String&gt; queue &#x3D; new LinkedList&lt;&gt;();</span><br><span class="line">        Arrays.stream(s).forEach(e -&gt; queue.add(e));</span><br><span class="line"></span><br><span class="line">        return proDe(queue);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private TreeNode proDe(Queue&lt;String&gt; queue)&#123;</span><br><span class="line">        String cur &#x3D; queue.poll();</span><br><span class="line">        if (cur.equals(&quot;#&quot;)) return null;</span><br><span class="line">        TreeNode res &#x3D; new TreeNode(Integer.valueOf(cur));</span><br><span class="line"></span><br><span class="line">        res.left &#x3D; proDe(queue);</span><br><span class="line">        res.right &#x3D; proDe(queue);</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>62、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public class KthNode_62 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 二叉搜索树的第k个节点</span><br><span class="line">     *</span><br><span class="line">     *  题目描述</span><br><span class="line">     * 给定一棵二叉搜索树，请找出其中的第k小的结点。例如， （5，3，7，2，4，6，8）  中，</span><br><span class="line">     * 按结点数值大小顺序第三小结点的值为4。</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     * bst的中序遍历是顺序的。 记录k即可。</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    TreeNode res;</span><br><span class="line"></span><br><span class="line">    TreeNode KthNode(TreeNode pRoot, int k)</span><br><span class="line">    &#123;</span><br><span class="line">        int[] state &#x3D; &#123;k&#125;;</span><br><span class="line">        process(pRoot, state);</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void process(TreeNode root, int[] state)&#123;</span><br><span class="line">        if (root &#x3D;&#x3D; null) return;</span><br><span class="line">        process(root.left,state);</span><br><span class="line">        state[0]--;</span><br><span class="line">        if (state[0] &#x3D;&#x3D; 0) res &#x3D; root;</span><br><span class="line">        else process(root.right,state);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>63、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">public class Median_63 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 数据流中的中位数</span><br><span class="line">     *</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，</span><br><span class="line">     * 那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，</span><br><span class="line">     * 那么中位数就是所有数值排序之后中间两个数的平均值。我们使用Insert()方法读取数据流，</span><br><span class="line">     * 使用GetMedian()方法获取当前读取数据的中位数。</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     * 经典思路，将数据流拆分成 大根堆 与 小根堆， 大根堆用来存小的一半元素，小根堆用来存大的一半元素，</span><br><span class="line">     *</span><br><span class="line">     * 用两个堆的对顶来计算中位数。</span><br><span class="line">     * 注：</span><br><span class="line">     * 1、insert 元素的时候， 需要考虑 小根堆与大根堆 大小， 长度差距超过2 会丢失中位数。</span><br><span class="line">     * 2、判断插入元素大小</span><br><span class="line">     * 默认 插大根堆，奇数情况大根堆 多一个元素。</span><br><span class="line">     *&#x2F;</span><br><span class="line">    PriorityQueue&lt;Integer&gt; heapMin &#x3D; new PriorityQueue&lt;&gt;();</span><br><span class="line">    PriorityQueue&lt;Integer&gt; heapMax &#x3D; new PriorityQueue&lt;&gt;((o1, o2) -&gt; o2-o1);</span><br><span class="line"></span><br><span class="line">    public void Insert(Integer num) &#123;</span><br><span class="line">        heapMax.add(num);</span><br><span class="line"></span><br><span class="line">        if (heapMin.size() !&#x3D; 0 &amp;&amp; heapMax.peek() &gt; heapMin.peek()) &#123;</span><br><span class="line">            Integer temp &#x3D; heapMin.poll();</span><br><span class="line">            heapMin.add(heapMax.poll());</span><br><span class="line">            heapMax.add(temp);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (heapMax.size() &gt; heapMin.size() + 1) heapMin.add(heapMax.poll());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Double GetMedian() &#123;</span><br><span class="line">        if (heapMin.size() &#x3D;&#x3D; heapMax.size())return (heapMax.peek() + heapMin.peek()) &#x2F; 2.0;</span><br><span class="line">        return (double) heapMax.peek();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>64、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">public class MaxInWindows_64 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 滑动窗口的最大值</span><br><span class="line">     *</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。</span><br><span class="line">     * 例如，如果输入数组&#123;2,3,4,2,6,2,5,1&#125;及滑动窗口的大小3，</span><br><span class="line">     * 那么一共存在6个滑动窗口，他们的最大值分别为&#123;4,4,6,6,6,5&#125;；</span><br><span class="line">     * 针对数组&#123;2,3,4,2,6,2,5,1&#125;的滑动窗口有以下6个：</span><br><span class="line">     * &#123;[2,3,4],2,6,2,5,1&#125;， &#123;2,[3,4,2],6,2,5,1&#125;， &#123;2,3,[4,2,6],2,5,1&#125;，</span><br><span class="line">     * &#123;2,3,4,[2,6,2],5,1&#125;， &#123;2,3,4,2,[6,2,5],1&#125;， &#123;2,3,4,2,6,[2,5,1]&#125;。</span><br><span class="line">     *</span><br><span class="line">     * 思路 ： 经典滑动窗口问题</span><br><span class="line">     *</span><br><span class="line">     * 核心 ： 维护一个单调递减的最大长度为3的最大值队列</span><br><span class="line">     * 保证队列头始终为当前窗口的最大值， 新加入的元素e，</span><br><span class="line">     * e前面的元素（队尾元素）比e小，就弹出。直到跟e相等将e插入</span><br><span class="line">     * 队列头清空越界元素，超出长度，把头弹出。</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public ArrayList&lt;Integer&gt; maxInWindows(int [] num, int size)</span><br><span class="line">    &#123;</span><br><span class="line">        ArrayList&lt;Integer&gt; res &#x3D; new ArrayList&lt;&gt;();</span><br><span class="line">        LinkedList&lt;Integer&gt; queue &#x3D; new LinkedList&lt;&gt;();&#x2F;&#x2F;存index ，方便控制元素是否在窗口内</span><br><span class="line"></span><br><span class="line">        if (size &#x3D;&#x3D; 0)return res; &#x2F;&#x2F; 特判！！</span><br><span class="line"></span><br><span class="line">        for (int i &#x3D; 0; i &lt; num.length; i++) &#123;</span><br><span class="line">            if ( !queue.isEmpty() &amp;&amp; queue.peek() + size -1 &lt; i) queue.pop();&#x2F;&#x2F;弹出队首</span><br><span class="line">            while (!queue.isEmpty() &amp;&amp; num[queue.getLast()] &lt; num[i]) queue.removeLast();</span><br><span class="line">            queue.add(i);</span><br><span class="line">            if (i &gt;&#x3D; size - 1) res.add(num[queue.peek()]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>65、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">public class HasPath_65 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 矩阵中的路径</span><br><span class="line">     *</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 请设计一个函数，用来判断在一个矩阵中是否存在一条</span><br><span class="line">     * 包含某字符串所有字符的路径。路径可以从矩阵中的任意一个格子开始，</span><br><span class="line">     * 每一步可以在矩阵中向左，向右，向上，向下移动一个格子。</span><br><span class="line">     * 如果一条路径经过了矩阵中的某一个格子，则该路径不能再进入该格子。</span><br><span class="line">     * 例如</span><br><span class="line">     * a b c e</span><br><span class="line">     * s f c s</span><br><span class="line">     * a d e e</span><br><span class="line">     * 矩阵中包含一条字符串&quot;bcced&quot;的路径，但是矩阵中不包含&quot;abcb&quot;路径，</span><br><span class="line">     * 因为字符串的第一个字符b占据了矩阵中的第一行第二个格子之后，</span><br><span class="line">     * 路径不能再次进入该格子</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     * 这是一道经典搜索问题</span><br><span class="line">     * 每个值都需要作为路径开始，向上下左右校验，能走通就继续走。</span><br><span class="line">     * flag数组 用来规避 已经走过的路径</span><br><span class="line">     *</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    public boolean hasPath(char[] matrix, int rows, int cols, char[] str)</span><br><span class="line">    &#123;</span><br><span class="line">        int k &#x3D; 0;</span><br><span class="line">        boolean[] flag &#x3D; new boolean[matrix.length];</span><br><span class="line">        for (int i &#x3D; 0; i &lt; rows; i++)&#123;</span><br><span class="line">            for(int j &#x3D; 0; j &lt; cols; j++)&#123;</span><br><span class="line">                if (judge(matrix, i, j, rows, cols, flag, str, 0))&#123;</span><br><span class="line">                    return true;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public boolean judge(char[] matrix, int i, int j,int rows, int cols, boolean[] flag,char[] str, int k)&#123;</span><br><span class="line">        int index &#x3D; i * cols + j;</span><br><span class="line">        if(i&lt;0 || j &lt; 0 || i &gt;&#x3D; rows || j &gt;&#x3D; cols || str[k] !&#x3D; matrix[index] || flag[index] &#x3D;&#x3D; true) return false;</span><br><span class="line"></span><br><span class="line">        if (k &#x3D;&#x3D; str.length - 1) return true;</span><br><span class="line"></span><br><span class="line">        flag[index] &#x3D; true;</span><br><span class="line"></span><br><span class="line">        if(judge(matrix, i+1, j, rows, cols, flag, str, k+1)||</span><br><span class="line">                judge(matrix, i-1, j, rows, cols, flag, str, k+1)||</span><br><span class="line">                judge(matrix, i, j+1, rows, cols, flag, str, k+1)||</span><br><span class="line">                judge(matrix, i, j-1, rows, cols, flag, str, k+1)</span><br><span class="line">        )&#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        flag[index] &#x3D; false;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>66、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">public class RobotMovingCount_66 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 机器人运动范围</span><br><span class="line">     *</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 地上有一个m行和n列的方格。一个机器人从坐标0,0的格子开始移动，</span><br><span class="line">     * 每一次只能向左，右，上，下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于k的格子。</span><br><span class="line">     * 例如，当k为18时，机器人能够进入方格（35,37），因为3+5+3+7 &#x3D; 18。但是，它不能进入方格（35,38）</span><br><span class="line">     * ，因为3+5+3+8 &#x3D; 19。请问该机器人能够达到多少个格子？</span><br><span class="line">     *</span><br><span class="line">     * 思路</span><br><span class="line">     * 从左上角开始往 右边和下边前进，用二维数组将走过的位置标记为1。统计1的个数</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    public int movingCount(int threshold, int rows, int cols)</span><br><span class="line">    &#123;</span><br><span class="line">        int[][] arr &#x3D; new int[rows][cols];</span><br><span class="line">        int count &#x3D; 0;</span><br><span class="line">        process(arr, 0 ,0, threshold);</span><br><span class="line"></span><br><span class="line">        for (int i &#x3D; 0; i &lt; rows ; i++) &#123;</span><br><span class="line">            for (int j &#x3D; 0; j &lt; cols; j++) &#123;</span><br><span class="line">                if (arr[i][j] &#x3D;&#x3D; 1) count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;PrintUtil.printMatrix(arr);</span><br><span class="line">        return count;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void process(int[][] arr, int i, int j , int threshold)&#123;</span><br><span class="line">        if (i &lt; 0 || j &lt; 0 || i &gt;&#x3D; arr.length || j &gt;&#x3D; arr[0].length || !judge(i,j,threshold) || arr[i][j] &#x3D;&#x3D; 1) return;</span><br><span class="line"></span><br><span class="line">        arr[i][j] &#x3D; 1;</span><br><span class="line">        process(arr,i+1,j,threshold);</span><br><span class="line">        process(arr,i,j+1,threshold);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private boolean judge( int i, int j, int threshold)&#123;</span><br><span class="line">        int sum &#x3D; i%10 + i&#x2F;10 + j%10 + j&#x2F;10;</span><br><span class="line">        return sum &lt;&#x3D; threshold ? true : false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>67、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public class CutRope_67 &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 剪绳子</span><br><span class="line">     *</span><br><span class="line">     * 题目描述</span><br><span class="line">     * 给你一根长度为n的绳子，请把绳子剪成整数长的m段（m、n都是整数，n&gt;1并且m&gt;1，m&lt;&#x3D;n），</span><br><span class="line">     * 每段绳子的长度记为k[1],...,k[m]。请问k[1]x...xk[m]可能的最大乘积是多少？</span><br><span class="line">     *</span><br><span class="line">     * 例如，当绳子的长度是8时，我们把它剪成长度分别为2、3、3的三段，此时得到的最大乘积是18。</span><br><span class="line">     *</span><br><span class="line">     * 思路：</span><br><span class="line">     * 小学奥数题，贪心问题。核心就是凑 3 ， 余1时 2*2 ， 余 2时 3*2。</span><br><span class="line">     *</span><br><span class="line">     * 证明 m 与 （m-3）*3 比大小</span><br><span class="line">     * （m-3）*3 - m &gt; 0  &#x3D;&gt; m &gt; 4.5 即 m &gt; 5 恒成立</span><br><span class="line">     * 讨论 m &#x3D; 4 ， 2*2 &gt; 1*3</span><br><span class="line">     *</span><br><span class="line">     * 代码边界未处理： n &#x3D; 2 时 ， 剪的话 return 1， 不剪 return 2</span><br><span class="line">     * n &#x3D; 3 ， 同理 return 2，</span><br><span class="line">     * 这样也可以 AC</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    public int cutRope(int n) &#123;</span><br><span class="line">        int m &#x3D; n%3;</span><br><span class="line"></span><br><span class="line">        if (m &#x3D;&#x3D; 1)&#123;</span><br><span class="line">            return (int) Math.pow( 3, n&#x2F;3 - 1) * 4;</span><br><span class="line">        &#125;else if (m &#x3D;&#x3D; 2)&#123;</span><br><span class="line">            return (int) Math.pow( 3, n&#x2F;3) * 2;</span><br><span class="line">        &#125;else &#123;&#x2F;&#x2F; m &#x3D;&#x3D; 0</span><br><span class="line">            return (int) Math.pow( 3, n&#x2F;3);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/offer/" rel="tag"># offer</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/01/12-4-%E5%89%91%E6%8C%87Offer-41-59/" rel="prev" title="12.4 剑指Offer 41-59">
+      <i class="fa fa-chevron-left"></i> 12.4 剑指Offer 41-59
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">AlexLJS</p>
+  <div class="site-description" itemprop="description">个人博客，用于分享Web开发的学习笔记和一些碎碎念。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexLJS</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'XVYaOQpDVtyf9vS7gyGWKM50-gzGzoHsz',
+      appKey     : 'tNz39ks5A6xit3uRDjDHC7ci',
+      placeholder: "(*^__^*) 嘻嘻……",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
