@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"alexljs.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="华为笔试题相对来说比较简单（即使是站在我这种菜鸡视角），记录一下比较典型的题目，供大家参考。 1、 质数因子障眼法，很骚。不用判断因子是不是质数 1234567891011121314151617181920212223242526272829303132333435363738394041package Huawei;import java.util.Scanner;public class P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="华为机试  题解">
+<meta property="og:url" content="http://alexljs.com/2020/08/11/%E5%8D%8E%E4%B8%BA%E6%9C%BA%E8%AF%95-%E9%A2%98%E8%A7%A3/index.html">
+<meta property="og:site_name" content="AlexPub_2020">
+<meta property="og:description" content="华为笔试题相对来说比较简单（即使是站在我这种菜鸡视角），记录一下比较典型的题目，供大家参考。 1、 质数因子障眼法，很骚。不用判断因子是不是质数 1234567891011121314151617181920212223242526272829303132333435363738394041package Huawei;import java.util.Scanner;public class P">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-11T06:42:25.000Z">
+<meta property="article:modified_time" content="2020-08-12T17:11:13.523Z">
+<meta property="article:author" content="AlexLJS">
+<meta property="article:tag" content="华为">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://alexljs.com/2020/08/11/%E5%8D%8E%E4%B8%BA%E6%9C%BA%E8%AF%95-%E9%A2%98%E8%A7%A3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>华为机试  题解 | AlexPub_2020</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexPub_2020</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">明知不可能而为之，才能感觉自己活着。图片不显示请用Chrome访问，Email：alexljs@outlook.com</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/08/11/%E5%8D%8E%E4%B8%BA%E6%9C%BA%E8%AF%95-%E9%A2%98%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AlexLJS">
+      <meta itemprop="description" content="个人博客，用于分享Web开发的学习笔记和一些碎碎念。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexPub_2020">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          华为机试  题解
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-11 14:42:25" itemprop="dateCreated datePublished" datetime="2020-08-11T14:42:25+08:00">2020-08-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-13 01:11:13" itemprop="dateModified" datetime="2020-08-13T01:11:13+08:00">2020-08-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/08/11/%E5%8D%8E%E4%B8%BA%E6%9C%BA%E8%AF%95-%E9%A2%98%E8%A7%A3/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/11/%E5%8D%8E%E4%B8%BA%E6%9C%BA%E8%AF%95-%E9%A2%98%E8%A7%A3/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>华为笔试题相对来说比较简单（即使是站在我这种菜鸡视角），记录一下比较典型的题目，供大家参考。</p>
+<h2 id="1、-质数因子"><a href="#1、-质数因子" class="headerlink" title="1、 质数因子"></a>1、 质数因子</h2><p>障眼法，很骚。不用判断因子是不是质数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">package Huawei;</span><br><span class="line"></span><br><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">public class PrimeFactor &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     *  6 质数因子</span><br><span class="line">     *</span><br><span class="line">     *  涉及到了质数的判断， &gt;1 逐一遍历，遍历到平方根。</span><br><span class="line">     *  </span><br><span class="line">     *  但是 ！！ 这题是个陷阱，不用判断因子是不是质数。</span><br><span class="line">     *  因为所有的合数都含有质数因子！提前被分解掉了，</span><br><span class="line">     *  比如 不会计算 6， 因为 2 ， 3已经被除掉了！ 如果 6 是 n的因数， 那么 2 3肯定也是因数。</span><br><span class="line">     *  显然不可能！</span><br><span class="line">     *&#x2F;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Scanner in &#x3D; new Scanner(System.in);</span><br><span class="line">        String s &#x3D; &quot;&quot;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        while (in.hasNextLine())&#123;</span><br><span class="line">            s &#x3D; in.nextLine();</span><br><span class="line">            long input &#x3D; Long.valueOf(s);</span><br><span class="line">            process(input);</span><br><span class="line">            System.out.println();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static void process(long n)&#123;</span><br><span class="line">        while (n !&#x3D; 1)&#123;</span><br><span class="line">            for (int i &#x3D; 2; i &lt;&#x3D; n; i++) &#123;</span><br><span class="line">                if (n%i &#x3D;&#x3D; 0)&#123;</span><br><span class="line">                    n &#x2F;&#x3D; i;</span><br><span class="line">                    System.out.print(i + &quot; &quot;);</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、二进制中-1-的个数"><a href="#2、二进制中-1-的个数" class="headerlink" title="2、二进制中 1 的个数"></a>2、二进制中 1 的个数</h2><p>这是一道 剑指 Offer 原题， 我觉得这题很难， 结果标了个“入门”。 笑了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">package Huawei;</span><br><span class="line"></span><br><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">public class CountOneInBinaryNum &#123;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 15 二进制中 1 的个数</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Scanner in &#x3D; new Scanner(System.in);</span><br><span class="line">        while (in.hasNextLine())&#123;</span><br><span class="line">            int num &#x3D; Integer.valueOf(in.nextLine());</span><br><span class="line">            int count &#x3D; 0;</span><br><span class="line">            while (num !&#x3D; 0)&#123;</span><br><span class="line">                num &#x3D; num &amp; (num - 1);</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(count);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3、购物车"><a href="#3、购物车" class="headerlink" title="3、购物车"></a>3、购物车</h2><p>好难！ 01 背包问题 + 分组背包 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="4、-坐标移动"><a href="#4、-坐标移动" class="headerlink" title="4、 坐标移动"></a>4、 坐标移动</h2><p>题目没难度，积累 ： 要注意处理多组测试数据， 全局数组归零</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">package Huawei;</span><br><span class="line"></span><br><span class="line">import Utils.PrintUtil;</span><br><span class="line"></span><br><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">public class MoveCoordinate &#123;</span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 坐标移动 17</span><br><span class="line">     * </span><br><span class="line">     * 要注意处理多组测试数据， 全局数组归零</span><br><span class="line">     *</span><br><span class="line">     *&#x2F;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Scanner in &#x3D; new Scanner(System.in);</span><br><span class="line">        int[] res &#x3D; new int[]&#123;0,0&#125;;</span><br><span class="line">        while (in.hasNextLine())&#123;</span><br><span class="line">            String[] input &#x3D; in.nextLine().split(&quot;;&quot;);</span><br><span class="line">            for (int i &#x3D; 0; i &lt; input.length; i++) &#123;</span><br><span class="line">                String s &#x3D; input[i];</span><br><span class="line">                if (s.matches(&quot;^[ASDW][0-9]+$&quot;))&#123;</span><br><span class="line">                    int v &#x3D; Integer.valueOf( s.substring(1) );</span><br><span class="line">                    if (s.charAt(0) &#x3D;&#x3D; &#39;A&#39;)&#123;</span><br><span class="line">                        res[0] -&#x3D; v;</span><br><span class="line">                    &#125;else if (s.charAt(0) &#x3D;&#x3D; &#39;S&#39;)&#123;</span><br><span class="line">                        res[1] -&#x3D; v;</span><br><span class="line">                    &#125;else if (s.charAt(0) &#x3D;&#x3D; &#39;D&#39;)&#123;</span><br><span class="line">                        res[0] +&#x3D; v;</span><br><span class="line">                    &#125;else if (s.charAt(0) &#x3D;&#x3D; &#39;W&#39;)&#123;</span><br><span class="line">                        res[1] +&#x3D; v;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(res[0] + &quot;,&quot; + res[1]);</span><br><span class="line">            res[0] &#x3D; 0;</span><br><span class="line">            res[1] &#x3D; 0;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="5、合唱队"><a href="#5、合唱队" class="headerlink" title="5、合唱队"></a>5、合唱队</h2><p>最长上升子序列</p>
+<p>子序列：　不连续<br>子串：　连续</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class Main &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        Scanner in &#x3D; new Scanner(System.in);</span><br><span class="line"></span><br><span class="line">        while (in.hasNextLine())&#123;</span><br><span class="line">            int len &#x3D; Integer.valueOf(in.nextLine());</span><br><span class="line">            int[] arr &#x3D; new int[len];</span><br><span class="line">            int[] dp1 &#x3D; new int[len];</span><br><span class="line">            int[] dp2 &#x3D; new int[len];</span><br><span class="line"></span><br><span class="line">            String[] input &#x3D; in.nextLine().split(&quot; &quot;);</span><br><span class="line">            for (int i &#x3D; 0; i &lt; len; i++) &#123;</span><br><span class="line">                arr[i] &#x3D; Integer.valueOf(input[i]);</span><br><span class="line">                dp1[i] &#x3D; 1;</span><br><span class="line">                dp2[i] &#x3D; 1;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            for (int i &#x3D; 0; i &lt; len; i++) &#123;</span><br><span class="line">                for (int j &#x3D; 0; j &lt; i; j++) &#123;</span><br><span class="line">                    if (arr[j] &lt; arr[i])&#123;</span><br><span class="line">                        dp1[i] &#x3D; Math.max(dp1[i] , dp1[j] + 1);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            for (int i &#x3D; len - 1; i &gt;&#x3D; 0; i--) &#123;</span><br><span class="line">                for (int j &#x3D; len - 1; j &gt; i ; j--) &#123;</span><br><span class="line">                    if (arr[j] &lt; arr[i]) &#123;</span><br><span class="line">                        dp2[i] &#x3D; Math.max(dp2[i], dp2[j] + 1);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            int max &#x3D; 0;</span><br><span class="line"></span><br><span class="line">            for (int i &#x3D; 0; i &lt; len; i++) &#123;</span><br><span class="line">                max &#x3D; Math.max(dp1[i]+dp2[i]-1, max);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(len - max);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="6、迷宫问题"><a href="#6、迷宫问题" class="headerlink" title="6、迷宫问题"></a>6、迷宫问题</h2><p>经典回溯， 但是输入输出搞不定，不能AC 蛋疼</p>
+<h2 id="7、24点"><a href="#7、24点" class="headerlink" title="7、24点"></a>7、24点</h2><p>回溯 + 1</p>
+<p>连穷举算法都很难想！唉 </p>
+<p>更神奇的是错误代码可以通过 牛客OJ。</p>
+<p>错误代码： 用例 6 2 3 4</p>
+<p>错的非常隐蔽！测试用例全能通过，但是没有用上 四个数字！<br>引发原因是未考虑符号优先级。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class Main &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		Scanner input&#x3D;new Scanner(System.in);</span><br><span class="line">		double result&#x3D;0.0;</span><br><span class="line">		int[] num&#x3D;new int[4];</span><br><span class="line">		while(input.hasNext())&#123;</span><br><span class="line">			int[] temp&#x3D;new int[4];</span><br><span class="line">			for(int i&#x3D;0;i&lt;4;i++)&#123;</span><br><span class="line">				num[i]&#x3D;input.nextInt();</span><br><span class="line">			&#125;</span><br><span class="line">			System.out.println(check(num,temp,result));</span><br><span class="line">		&#125;</span><br><span class="line">		input.close();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private static boolean check(int[] num,int[] temp,double result) &#123;</span><br><span class="line">		for(int i&#x3D;0;i&lt;num.length;i++)&#123;</span><br><span class="line">			if(temp[i]&#x3D;&#x3D;0)&#123;</span><br><span class="line">				temp[i]&#x3D;1;</span><br><span class="line">				if(check(num,temp,result+num[i])</span><br><span class="line">						|| check(num,temp,result-num[i])</span><br><span class="line">						|| check(num,temp,result*num[i])</span><br><span class="line">						|| check(num,temp,result&#x2F;num[i]))&#123;</span><br><span class="line">					return true;</span><br><span class="line">				&#125;</span><br><span class="line">				temp[i]&#x3D;0;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		if(result&#x3D;&#x3D;24)&#123;</span><br><span class="line">			return true;</span><br><span class="line">		&#125;else&#123;</span><br><span class="line">			return false;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个问题，非常难</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8D%8E%E4%B8%BA/" rel="tag"># 华为</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/06/SQL-%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B/" rel="prev" title="SQL 语法简介">
+      <i class="fa fa-chevron-left"></i> SQL 语法简介
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/15/6-1-%E5%A0%86%E6%8E%92%E5%BA%8F/" rel="next" title="6.1 堆排序">
+      6.1 堆排序 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、-质数因子"><span class="nav-number">1.</span> <span class="nav-text">1、 质数因子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、二进制中-1-的个数"><span class="nav-number">2.</span> <span class="nav-text">2、二进制中 1 的个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、购物车"><span class="nav-number">3.</span> <span class="nav-text">3、购物车</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、-坐标移动"><span class="nav-number">4.</span> <span class="nav-text">4、 坐标移动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、合唱队"><span class="nav-number">5.</span> <span class="nav-text">5、合唱队</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、迷宫问题"><span class="nav-number">6.</span> <span class="nav-text">6、迷宫问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7、24点"><span class="nav-number">7.</span> <span class="nav-text">7、24点</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">AlexLJS</p>
+  <div class="site-description" itemprop="description">个人博客，用于分享Web开发的学习笔记和一些碎碎念。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexLJS</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'XVYaOQpDVtyf9vS7gyGWKM50-gzGzoHsz',
+      appKey     : 'tNz39ks5A6xit3uRDjDHC7ci',
+      placeholder: "(*^__^*) 嘻嘻……",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

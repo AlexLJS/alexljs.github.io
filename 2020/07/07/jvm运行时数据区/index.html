@@ -20,18 +20,23 @@
     var CONFIG = {"hostname":"alexljs.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="尚在整理">
+  <meta name="description" content="一、前置（预： 前置内容有点多）（图片参考公众号 ： 彤哥读源码 ， 这个公众号特别好） 模糊问题一定要看官方文档：  jvm 规范 oracle 1、JMM 内存模型本文要介绍JVM 内存模型， 那什么又是 JMM 内存模型？有什么区别？ JMM 模型相似于现代计算机的 CPU 的缓存模型，L3缓存对应主存， 核心core对应线程， L1、 L2 对应工作内存。 因为二者面向的问题本质相同：并发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jvm运行时数据区">
 <meta property="og:url" content="http://alexljs.com/2020/07/07/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/index.html">
 <meta property="og:site_name" content="AlexPub_2020">
-<meta property="og:description" content="尚在整理">
+<meta property="og:description" content="一、前置（预： 前置内容有点多）（图片参考公众号 ： 彤哥读源码 ， 这个公众号特别好） 模糊问题一定要看官方文档：  jvm 规范 oracle 1、JMM 内存模型本文要介绍JVM 内存模型， 那什么又是 JMM 内存模型？有什么区别？ JMM 模型相似于现代计算机的 CPU 的缓存模型，L3缓存对应主存， 核心core对应线程， L1、 L2 对应工作内存。 因为二者面向的问题本质相同：并发">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/15578361-bd756aa1a9fa5de8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/15578361-777b56726a216065.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/15578361-9f38a51c965e88d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/15578361-231dad1de322ecde.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="article:published_time" content="2020-07-07T10:55:40.000Z">
-<meta property="article:modified_time" content="2020-07-15T16:23:24.588Z">
+<meta property="article:modified_time" content="2020-08-17T14:30:02.703Z">
 <meta property="article:author" content="AlexLJS">
 <meta property="article:tag" content="Jvm">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/15578361-bd756aa1a9fa5de8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 <link rel="canonical" href="http://alexljs.com/2020/07/07/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/">
 
@@ -192,7 +197,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-16 00:23:24" itemprop="dateModified" datetime="2020-07-16T00:23:24+08:00">2020-07-16</time>
+                <time title="修改时间：2020-08-17 22:30:02" itemprop="dateModified" datetime="2020-08-17T22:30:02+08:00">2020-08-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -229,7 +234,94 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>尚在整理</p>
+        <h2 id="一、前置"><a href="#一、前置" class="headerlink" title="一、前置"></a>一、前置</h2><p>（预： 前置内容有点多）<br>（图片参考公众号 ： 彤哥读源码 ， 这个公众号特别好）</p>
+<p>模糊问题一定要看官方文档： <a href="https://docs.oracle.com/javase/specs/index.html" target="_blank" rel="noopener"> jvm 规范 oracle</a></p>
+<h3 id="1、JMM-内存模型"><a href="#1、JMM-内存模型" class="headerlink" title="1、JMM 内存模型"></a>1、JMM 内存模型</h3><p>本文要介绍JVM 内存模型， 那什么又是 JMM 内存模型？有什么区别？</p>
+<p>JMM 模型相似于现代计算机的 CPU 的缓存模型，L3缓存对应主存， 核心core对应线程， L1、 L2 对应工作内存。 因为二者面向的问题本质相同：并发情况下的数据一致性。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/15578361-bd756aa1a9fa5de8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JMM模型.png"></p>
+<p>JMM 内存模型 ，java memory model 即 java 内存模型， 它是一个不存在的、高度抽象的模型。其简化了对各个平台的差异， 着重描述线程之间的数据同步模型。 与 jvm 相比， jmm 也是内存模型，只是对内存结构的不同层面描述。 可以进行一定的对应关联，如下：</p>
+<p>堆和方法区对应主存 ， 栈（本地方法栈、 虚拟机栈） 和程序计数器对应工作内存。 （即以 内存的线程私有性进行划分）</p>
+<a id="more"></a>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/15578361-777b56726a216065.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="运行时数据区.png"></p>
+<p>在 jmm 模型中，主存中的数据是线程共享的， 线程要操作主存中的数据，只能先将其拷贝到线程的工作内存中。在工作内存中操作完成，再同步回主存。这个过程显然会触发共享变量的数据一致性问题（原子性，有序性，可见性）。</p>
+<blockquote>
+<p>面试题 ： 说说共享内存？（线程之间的通信方式？）<br>答： 共享内存即不同线程均可以操作的主存中的数据， 一般指的是堆中的数据。JMM 模型中， read 和 load 操作必须得是原子操作，否则会触发数据一致性问题。 对于， 非基本类型变量可以通过加锁的方式进行原子操作。</p>
+</blockquote>
+<p>这里的加锁 lock 和 unlock 是 jmm 通过协议为内存之间的数据交互提供的八种操作中的两种。 不是 ，API 层面的可重入锁 Lock 。 这里的 lock 和 unlock 方法并为暴露给用户， 取而代之暴露的是  同步监视器， 即 synchronized 的底层。</p>
+<blockquote>
+<p>面试题 ：  synchronized 底层原理？<br>答 ：  javap 反编译  moniterenter 和 moniterexit ， 对应 lock 和 unlock。</p>
+</blockquote>
+<p>关于 JMM 还有先行发生原则， 本文略。</p>
+<h3 id="2、线程"><a href="#2、线程" class="headerlink" title="2、线程"></a>2、线程</h3><blockquote>
+<p>面试题：进程和线程有什么区别？<br>答： 进程指程序， 线程是cpu分配资源的最小单元。一个进程可以有多个线程。</p>
+</blockquote>
+<p>关于 jvm 线程 ：<br>其实 ， jvm 线程于 本地线程 一一映射。 在java 中 ，线程的启用 start 会自动调用 Thread 的 run() 方法。 </p>
+<blockquote>
+<p>面试题 ： 线程出问题程序停不停止？<br>答：  线程异常结束会使进程停止的。</p>
+</blockquote>
+<p>守护线程 ： 是一个优先级最低的线程， 其他线程都结束了，jvm 会无视守护线程的存在，直接关闭程序。守护线程为其他线程提供服务的线程，最典型就是 GC 。</p>
+<p>后台运行的线程 ： 虚拟机线程<br>周期任务线程：编译线程、信号调度线程、GC线程</p>
+<p>注： 如何让查看 java 程序后台线程？<br>jdk 给我们提供了命令 ，  <code>jconsole</code> ， win 下的 jconsole  是一个友好的图形化界面。<br>（开了一个从键盘检测输入的算法题， 举例）</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/15578361-9f38a51c965e88d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="win10.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/15578361-231dad1de322ecde.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<hr>
+<h2 id="二、JVM-运行时数据区"><a href="#二、JVM-运行时数据区" class="headerlink" title="二、JVM 运行时数据区"></a>二、JVM 运行时数据区</h2><p>这部分面试问题特别直接， 介绍一下 jvm 的内存结构。。。。。 </p>
+<h3 id="1、程序计数器："><a href="#1、程序计数器：" class="headerlink" title="1、程序计数器："></a>1、程序计数器：</h3><p>（PC寄存器/程序钩子）模拟 cpu 寄存器 ， 每个线程由一份线程私有，存储下一条指令的地址（偏移地址）。没有OOM机制。</p>
+<blockquote>
+<p>问题1 ： pc寄存器存储地址用途 ？<br>答 ： cpu（的一个核心）切换线程工作 ，切换回来的时候找到下一条指令。</p>
+</blockquote>
+<blockquote>
+<p>问题2 : 为何pc寄存器 线程私有 ？<br>答 ：  因为线程独立的 ，所以pc寄存器不可能线程共享</p>
+</blockquote>
+<p>注 ：<br>什么是并行串行？ CPU 时间片 ？<br>答：　所谓并行，　就是不同 CPU 核心，同时做自己的事情。 串行 ： 同一个 CPU 核心一件一件做事  。 并发：一个核心切换执行多个线程，一会儿做做a ， 一会儿做做b ， 看起来 “同时”。 CPU 时间片是一个操作系统上的概念， cpu （core）分给每个程序 （进程）的时间。</p>
+<h3 id="2、本地方法栈-native-methods-stack"><a href="#2、本地方法栈-native-methods-stack" class="headerlink" title="2、本地方法栈 native methods stack"></a>2、本地方法栈 native methods stack</h3><p>java 有许多底层的本地方法， 使用 C / C++ 写的 。 当线程调用正常方法的时候， 进入虚拟机栈。 调用本地 native 方法， 压入本地方法栈。 线程私有 ， 也会出现 OOM ， 也会栈溢出StackOverFlow。 其他结构类似虚拟机栈。</p>
+<p>本地方法栈存在的意义，通过本地方法接口调用 c 的编译器编译去要的本地方法。 这与 java 编译执行是不同的。</p>
+<p>注 ： 下面的步骤 ：<br><strong>执行引擎</strong> 找到指令地址， 将指令写进局部变量表、操作栈…将字节码指令翻译成及其指令。</p>
+<h3 id="3、堆-heap"><a href="#3、堆-heap" class="headerlink" title="3、堆 heap"></a>3、堆 heap</h3><p>heap 是发生垃圾回收的主要区域。 简言之， new 出来的 对象 就会在堆区开辟新的内存空间， 而对象的引用会被放回虚拟机栈。堆区的划分与垃圾回收紧密相连， 会在下篇文章中主要分析。</p>
+<h3 id="4、方法区（元空间）"><a href="#4、方法区（元空间）" class="headerlink" title="4、方法区（元空间）"></a>4、方法区（元空间）</h3><p>方法区、永久代，1.8 以后叫 MetaSpace 元空间 ，并且不在堆内存中，被分配到了本地内存。对于方法区的划分， 网上的争议非常大。  方法区主要 存放class信息和运行时常量池，而class信息中又含有类常量池，类常量池用来存放 字面量 和 符号引用。class 常量池的信息随着程序首次运行就被静态加载进方法区， 但是其常量池在类被使用的时候，会被转化为运行时常量池。</p>
+<p>（既然最终会被放在一起， 所以称为运行时常量池似乎并不无妥。做这个区分主要是表示：运行时常量池的常量信息是可以在程序运行的时候动态加载的，作为区分。）</p>
+<h4 id="注：类常量池"><a href="#注：类常量池" class="headerlink" title="注：类常量池"></a>注：类常量池</h4><p>符号引用： 就是类的信息，我们知道 static 修饰的属性属于类 ， 所以静态变量和静态方法被保存在这里 。(还有 域信息：　public  ,  protect ,  private, default , volatile,  static , final , transient 等)</p>
+<p>字面量 ： 即 常量（final 修饰的变量）， 字符串，基本数据类型。</p>
+<p>方法区也会发生栈溢出 和 OOM。</p>
+<h4 id="注-：-运行时常量池"><a href="#注-：-运行时常量池" class="headerlink" title="注 ： 运行时常量池"></a>注 ： 运行时常量池</h4><p>运行时 常量池 相当于一个常量表，主要 用来存放被 static 修饰的成员信息 和 方法的引用，在栈针中有对于常量池的顶引用区域。</p>
+<p>但是， final 修饰的常量 static final 不会在常量池 ， final 变量在编译的时候就被分配的固定的内存空间 和 地址。这里涉及了 字面量 和 符号引用的差别， 符号引用是运行时，被动态链接即被动态指向内存地址。而字面量，责在编译的时候就被固定了内存地址，即分配空间。</p>
+<blockquote>
+<p>命令 ： 设置方法区的大小<br>参数 <code>XX:MetaSpaceSize  大小</code> ，默认大小是 21 m 。 但是方法区满了也会触发 gc。 为了避免频繁gc， 可以将大小输入 -1  。不做上界限制。</p>
+</blockquote>
+<h4 id="注-：-全局-String-常量池"><a href="#注-：-全局-String-常量池" class="headerlink" title="注 ： 全局 String 常量池"></a>注 ： 全局 String 常量池</h4><p>1.7 以后 字符串常量池也从元空间分出来，在堆中开辟了空间。</p>
+<h3 id="5、虚拟机栈-stack"><a href="#5、虚拟机栈-stack" class="headerlink" title="5、虚拟机栈 stack"></a>5、虚拟机栈 stack</h3><p>下文单独说。</p>
+<hr>
+<h2 id="三、-虚拟机栈"><a href="#三、-虚拟机栈" class="headerlink" title="三、 虚拟机栈"></a>三、 虚拟机栈</h2><p>java 跨平台的原因之一， java的指令都是基于栈来设计的。如果基于寄存器，会与cpu架构进行深度耦合。同时性能会有所牺牲。</p>
+<p>stack 负责程序运行， heap 负责数据存储。stack也是线程私有的， stack里存的是栈帧。生命周期同步stack。保存方法的局部变量、部分结果，参与方法调用和返回。</p>
+<h3 id="1、栈帧-stack-frame"><a href="#1、栈帧-stack-frame" class="headerlink" title="1、栈帧 stack frame"></a>1、栈帧 stack frame</h3><p>每个栈帧对应一个 java 方法。 执行一个方法， 方法栈帧压栈； 方法执行完毕，栈帧出栈。</p>
+<p>Stack 是先进后出 FILO 的数据结构 。 对于栈不存在 GC， 不存在 GC ， 但仍会 OOM。</p>
+<p>注：栈是线程运行时的数据结构， 堆是存储结构， 所以栈的生命周期与线程一致。</p>
+<h3 id="2、设置栈空间的大小："><a href="#2、设置栈空间的大小：" class="headerlink" title="2、设置栈空间的大小："></a>2、设置栈空间的大小：</h3><p>栈的空间是可以自己设置的。</p>
+<blockquote>
+<p>命令 ： -Xss size<br>（idea ：Run-&gt;Application-&gt;StackErroTest-&gt;VM options ）</p>
+</blockquote>
+<blockquote>
+<p>问题 ：栈会不会发生OOM？<br>答 ： 尽管栈空间可以设置为动态扩容， 但是申请栈空间时，内存没有空间了，那么在Stack也会发生OOM。</p>
+</blockquote>
+<h3 id="3、栈的存储单位"><a href="#3、栈的存储单位" class="headerlink" title="3、栈的存储单位"></a>3、栈的存储单位</h3><p>上文说过的 Stack Frame  ， 一个活动的线程中，只能有一个活动的栈帧，即当前栈帧 指向栈顶元素。栈与栈之间是相互隔离的 ，不可以互相调用。 但是方法区、堆是属于进程的，栈与栈之间可以借此进行数据共享。 方法中的 return 实际上是返回这个方法执行结果，给前一个栈帧。</p>
+<p>栈帧出栈的条件 ： 方法正常 return ； 方法抛出未捕获异常。</p>
+<h3 id="4、栈帧的内部结构"><a href="#4、栈帧的内部结构" class="headerlink" title="4、栈帧的内部结构"></a>4、栈帧的内部结构</h3><p>1) 局部变量表 ：</p>
+<p>存放局部变量</p>
+<p>数值型数组，用来存储 方法的参数和定义在方法体内的局部变量。基本类型都可以存储为数值， 对于非基本类型保存对象的引用。局部变量表是线程私有数据，具体空间在编译时确定下来，一旦确定下便不可更改。 </p>
+<p>2) 操作数栈 </p>
+<p>又叫 表达式栈，存放表达式的中间结果</p>
+<p>根据字节码指令保存操作的中间结果。例如，方法a中调用其他方法b，b的返回值就被压入操作数栈，然后等待 PC寄存器 中的下一条字节码指令。 </p>
+<blockquote>
+<p>栈顶缓存技术 ：<br>将栈顶的元素换存在cpu的寄存器中，减少对于内存的读写次数。</p>
+</blockquote>
+<p>3) 动态链接</p>
+<p>指向方法区的符号引用 的类信息的 方法引用。</p>
+<p>此处涉及到方法的调用。动态链接指向方法区中的符号引用， 符号引用转化称为直接引用， 指向堆内存中的地址。静态链接则是针对字面量而言的。</p>
+<p>4) 方法返回地址</p>
+<p>方法正常退出或者异常退出的定义</p>
+<p>5) 其他信息</p>
+<p>例如调试相关</p>
 
     </div>
 
@@ -314,6 +406,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、前置"><span class="nav-number">1.</span> <span class="nav-text">一、前置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、JMM-内存模型"><span class="nav-number">1.1.</span> <span class="nav-text">1、JMM 内存模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、线程"><span class="nav-number">1.2.</span> <span class="nav-text">2、线程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、JVM-运行时数据区"><span class="nav-number">2.</span> <span class="nav-text">二、JVM 运行时数据区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、程序计数器："><span class="nav-number">2.1.</span> <span class="nav-text">1、程序计数器：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、本地方法栈-native-methods-stack"><span class="nav-number">2.2.</span> <span class="nav-text">2、本地方法栈 native methods stack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、堆-heap"><span class="nav-number">2.3.</span> <span class="nav-text">3、堆 heap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、方法区（元空间）"><span class="nav-number">2.4.</span> <span class="nav-text">4、方法区（元空间）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注：类常量池"><span class="nav-number">2.4.1.</span> <span class="nav-text">注：类常量池</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注-：-运行时常量池"><span class="nav-number">2.4.2.</span> <span class="nav-text">注 ： 运行时常量池</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注-：-全局-String-常量池"><span class="nav-number">2.4.3.</span> <span class="nav-text">注 ： 全局 String 常量池</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、虚拟机栈-stack"><span class="nav-number">2.5.</span> <span class="nav-text">5、虚拟机栈 stack</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、-虚拟机栈"><span class="nav-number">3.</span> <span class="nav-text">三、 虚拟机栈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、栈帧-stack-frame"><span class="nav-number">3.1.</span> <span class="nav-text">1、栈帧 stack frame</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、设置栈空间的大小："><span class="nav-number">3.2.</span> <span class="nav-text">2、设置栈空间的大小：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、栈的存储单位"><span class="nav-number">3.3.</span> <span class="nav-text">3、栈的存储单位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、栈帧的内部结构"><span class="nav-number">3.4.</span> <span class="nav-text">4、栈帧的内部结构</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -327,7 +420,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -340,7 +433,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
