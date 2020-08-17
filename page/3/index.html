@@ -161,6 +161,228 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/07/07/%E8%85%BE%E8%AE%AF%E4%BA%91-Ubuntu-18-04-Redis%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AlexLJS">
+      <meta itemprop="description" content="个人博客，用于分享Web开发的学习笔记和一些碎碎念。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexPub_2020">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/07/%E8%85%BE%E8%AE%AF%E4%BA%91-Ubuntu-18-04-Redis%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">腾讯云 Ubuntu 18.04 Redis安装与配置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-07-07 17:39:22 / 修改时间：17:41:37" itemprop="dateCreated datePublished" datetime="2020-07-07T17:39:22+08:00">2020-07-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/07/%E8%85%BE%E8%AE%AF%E4%BA%91-Ubuntu-18-04-Redis%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/07/%E8%85%BE%E8%AE%AF%E4%BA%91-Ubuntu-18-04-Redis%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>参考教程 ：<a href="https://cloud.tencent.com/developer/article/1163860" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1163860</a></p>
+<p>官方网站：<a href="http://www.redis.cn/" target="_blank" rel="noopener">http://www.redis.cn/</a></p>
+<h2 id="一-、-过程中遇到的坑"><a href="#一-、-过程中遇到的坑" class="headerlink" title="一 、 过程中遇到的坑"></a>一 、 过程中遇到的坑</h2><p>虽然初学Redis，总的来说 Redis 安装配置基本没坑，可以不用docker。</p>
+<ol>
+<li>redis配置文件（<code>/etc/redis/redis.conf</code>）有一千多行 ，我吐了！定位需要的位置：</li>
+</ol>
+<p>1） <code>grep -rn &quot;dbfilename&quot;  /etc/redis/redis.conf</code> 定位 dbfilename 在哪行。<br>2） vim  ： <code>:n</code> 跳到第n行</p>
+<p>或者参考conf ： <a href="http://download.redis.io/redis-stable/redis.conf" target="_blank" rel="noopener">http://download.redis.io/redis-stable/redis.conf</a></p>
+<ol start="2">
+<li>可以顺利完成安装，启动服务，记下常用文件位置，方便后续调整使用。 </li>
+</ol>
+<p>配置文件位置： /etc/redis/redis.conf</p>
+<p>dump的rdb文件位置： /var/lib/redis</p>
+<p>redis性能测试 ： /usr/local/bin/redis-benchmark</p>
+<ol start="3">
+<li>第二台服务器 make test ，第53项报错，错误信息如下：</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/07/%E8%85%BE%E8%AE%AF%E4%BA%91-Ubuntu-18-04-Redis%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/07/06/Redis-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AlexLJS">
+      <meta itemprop="description" content="个人博客，用于分享Web开发的学习笔记和一些碎碎念。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexPub_2020">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/06/Redis-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">Redis 数据类型常用命令</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-06 00:13:54" itemprop="dateCreated datePublished" datetime="2020-07-06T00:13:54+08:00">2020-07-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-07 17:41:54" itemprop="dateModified" datetime="2020-07-07T17:41:54+08:00">2020-07-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/06/Redis-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/06/Redis-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>命令查询中文文档 ： <a href="http://www.redis.cn/commands.html" target="_blank" rel="noopener">http://www.redis.cn/commands.html</a></p>
+<p>换库 ： select [dbIndex]</p>
+<h2 id="一、Key"><a href="#一、Key" class="headerlink" title="一、Key"></a>一、Key</h2><ol>
+<li><p>查看key：<code>keys [pattern]</code><br>不建议使用<code>keys *</code> 查看所有Keys。建议正则匹配， 如 <code>keys t*</code> </p>
+</li>
+<li><p>添加元素： <code>set [key] [value]</code><br>发生冲突则覆盖</p>
+</li>
+<li><p>取得元素： <code>get [key]</code></p>
+</li>
+<li><p>判断key是否存在： <code>EXISTS [key]</code><br>存在返回 integer 1， 否则 0</p>
+</li>
+<li><p>移动key到某个数据库： <code>move [key] [dbIndex]</code></p>
+</li>
+<li><p>设置key过期时间： <code>expire [key] [seconds]</code><br>秒为单位设置key的过期时间， 已过期则移除DB</p>
+</li>
+<li><p>查看key还有多少秒过期： <code>ttl [key]</code></p>
+</li>
+</ol>
+<p>-1 表示永不过期， -2 表示已经过期</p>
+<ol start="8">
+<li><p>查看key是什么类型： <code>type [key]</code></p>
+</li>
+<li><p>删除key ： <code>del [key]</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/06/Redis-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/07/05/%E6%9D%82%E8%AE%B0-Java%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -718,7 +940,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

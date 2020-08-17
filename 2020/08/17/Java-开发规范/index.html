@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"alexljs.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="一、字符1.空格：ASCII （0x20）String 及String格式字符都将转义；Tab不用于缩进。 2.转义序列：(\b, \t, \n, \f, \r, &quot;, &#39; and \)使用该序列而不是相应的八进制（例如\ 012）或 Unicode（例如\ u000a） 3.其他：非unicode 字符保持可读性，推荐：String unitAbbrev &#x3D; “μs”;Best">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 开发规范">
+<meta property="og:url" content="http://alexljs.com/2020/08/17/Java-%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/index.html">
+<meta property="og:site_name" content="AlexPub_2020">
+<meta property="og:description" content="一、字符1.空格：ASCII （0x20）String 及String格式字符都将转义；Tab不用于缩进。 2.转义序列：(\b, \t, \n, \f, \r, &quot;, &#39; and \)使用该序列而不是相应的八进制（例如\ 012）或 Unicode（例如\ u000a） 3.其他：非unicode 字符保持可读性，推荐：String unitAbbrev &#x3D; “μs”;Best">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-17T15:58:46.000Z">
+<meta property="article:modified_time" content="2020-08-17T16:00:30.946Z">
+<meta property="article:author" content="AlexLJS">
+<meta property="article:tag" content="Java基础">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://alexljs.com/2020/08/17/Java-%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Java 开发规范 | AlexPub_2020</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AlexPub_2020</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">明知不可能而为之，才能感觉自己活着。图片不显示请用Chrome访问，Email：alexljs@outlook.com</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://alexljs.com/2020/08/17/Java-%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AlexLJS">
+      <meta itemprop="description" content="个人博客，用于分享Web开发的学习笔记和一些碎碎念。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AlexPub_2020">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java 开发规范
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-17 23:58:46" itemprop="dateCreated datePublished" datetime="2020-08-17T23:58:46+08:00">2020-08-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-18 00:00:30" itemprop="dateModified" datetime="2020-08-18T00:00:30+08:00">2020-08-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/08/17/Java-%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/17/Java-%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一、字符"><a href="#一、字符" class="headerlink" title="一、字符"></a>一、字符</h1><h2 id="1-空格：ASCII-（0x20）"><a href="#1-空格：ASCII-（0x20）" class="headerlink" title="1.空格：ASCII （0x20）"></a>1.空格：ASCII （0x20）</h2><p>String 及String格式字符都将转义；Tab不用于缩进。</p>
+<h2 id="2-转义序列：-b-t-n-f-r-quot-39-and"><a href="#2-转义序列：-b-t-n-f-r-quot-39-and" class="headerlink" title="2.转义序列：(\b, \t, \n, \f, \r, &quot;, &#39; and \)"></a>2.转义序列：(\b, \t, \n, \f, \r, &quot;, &#39; and \)</h2><p>使用该序列而不是相应的八进制（例如\ 012）或 Unicode（例如\ u000a）</p>
+<h2 id="3-其他："><a href="#3-其他：" class="headerlink" title="3.其他："></a>3.其他：</h2><p>非unicode 字符保持可读性，推荐：<br>String unitAbbrev = “μs”;<br>Best: perfectly clear even without a comment.</p>
+<h1 id="二、资源文件"><a href="#二、资源文件" class="headerlink" title="二、资源文件"></a>二、资源文件</h1><h2 id="1-版权许可：不可省略"><a href="#1-版权许可：不可省略" class="headerlink" title="1.版权许可：不可省略"></a>1.版权许可：不可省略</h2><h2 id="2-Package语句："><a href="#2-Package语句：" class="headerlink" title="2.Package语句："></a>2.Package语句：</h2><p>不换行，不受每行最多字符限制</p>
+<h2 id="3-导包："><a href="#3-导包：" class="headerlink" title="3.导包："></a>3.导包：</h2><p>禁止使用通配符静态导入</p>
+<h2 id="4-顺序：ASCII排序顺序"><a href="#4-顺序：ASCII排序顺序" class="headerlink" title="4.顺序：ASCII排序顺序"></a>4.顺序：ASCII排序顺序</h2><p>从一个组中静态导入；com.google</p>
+<h2 id="5-Class声明："><a href="#5-Class声明：" class="headerlink" title="5.Class声明："></a>5.Class声明：</h2><p>类名与顶层类相同；保证可阅读性，类的成员（变量&amp;方法）排序不使用时间顺序，按照一定的内在逻辑。</p>
+<h2 id="6-构造方法重载："><a href="#6-构造方法重载：" class="headerlink" title="6.构造方法重载："></a>6.构造方法重载：</h2><p>多个重载构造方法之间，不要添加成员变量</p>
+<a id="more"></a>
+
+<h1 id="三、格式"><a href="#三、格式" class="headerlink" title="三、格式"></a>三、格式</h1><h2 id="1-大括号（代码块）：不可省略"><a href="#1-大括号（代码块）：不可省略" class="headerlink" title="1.大括号（代码块）：不可省略"></a>1.大括号（代码块）：不可省略</h2><p>只有一条语句也不能省略；遵循 Kernighan and Ritchie 风格（《C程序设计语言(TheCProgrammingLanguage)》）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">return new MyClass() &#123;</span><br><span class="line">  @Override </span><br><span class="line">  public void method() &#123;</span><br><span class="line">    if (condition()) &#123;</span><br><span class="line">      try &#123;</span><br><span class="line">        something();</span><br><span class="line">      &#125; catch (ProblemException e) &#123;</span><br><span class="line">        recover();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其实跟多数ide 相同， 不要自己在括号开闭时候添加多余换行，降低阅读性。<br>空代码块，两个括号紧邻。</p>
+<h2 id="2-缩进：两个空格"><a href="#2-缩进：两个空格" class="headerlink" title="2.缩进：两个空格"></a>2.缩进：两个空格</h2><p>每次打开代码块，要缩进两个空格</p>
+<h2 id="3-语句："><a href="#3-语句：" class="headerlink" title="3.语句："></a>3.语句：</h2><p>一条语句一行；<br>根据不同项目，每行最多80/100个字符限制（package / import 语句， URL  ，shell命令不受限制）</p>
+<h2 id="4-换行位置："><a href="#4-换行位置：" class="headerlink" title="4.换行位置："></a>4.换行位置：</h2><p>（没有明确规范，个人习惯）<br>非赋值运算符处换行；在一些其他运算符处换行（，、&amp;等等）</p>
+<h2 id="5-空白："><a href="#5-空白：" class="headerlink" title="5.空白："></a>5.空白：</h2><p>空行只用于分隔两个逻辑部分，比如所有成员变量和所有成员方法之间。</p>
+<h2 id="6-分组括号："><a href="#6-分组括号：" class="headerlink" title="6.分组括号："></a>6.分组括号：</h2><p>必要分组括号，没人能记清楚每个运算符的优先级。</p>
+<h2 id="7-变量声明："><a href="#7-变量声明：" class="headerlink" title="7.变量声明："></a>7.变量声明：</h2><p>一个变量声明，只声明一个变量，不要使用<br>int a，b;<br>##8.switch：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">switch (input) &#123;</span><br><span class="line">  case 1:</span><br><span class="line">  case 2:</span><br><span class="line">    prepareOneOrTwo();</span><br><span class="line">    &#x2F;&#x2F; fall through</span><br><span class="line">  case 3:</span><br><span class="line">    handleOneTwoOrThree();</span><br><span class="line">    break;</span><br><span class="line">  default:</span><br><span class="line">    handleLargeNumber(input);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>default 语句即使没有代码，也不可省略。</p>
+<h2 id="9-修饰符顺序："><a href="#9-修饰符顺序：" class="headerlink" title="9.修饰符顺序："></a>9.修饰符顺序：</h2><p><code>public protected private abstract static final transient volatile synchronized native strictfp</code></p>
+<h2 id="10-数字文字："><a href="#10-数字文字：" class="headerlink" title="10.数字文字："></a>10.数字文字：</h2><p>长整型，结尾大写L， 以免和1混淆</p>
+<h1 id="四、命名"><a href="#四、命名" class="headerlink" title="四、命名"></a>四、命名</h1><h2 id="1-减少下划线：-name-mName-s-name-and-kName-禁止。"><a href="#1-减少下划线：-name-mName-s-name-and-kName-禁止。" class="headerlink" title="1.减少下划线： name_, mName, s_name and kName,禁止。"></a>1.减少下划线： name_, mName, s_name and kName,禁止。</h2><h2 id="2-包命名："><a href="#2-包命名：" class="headerlink" title="2.包命名："></a>2.包命名：</h2><p>包名称全部小写，连续的单词简单连接在一起（没有下划线）。 例如，com.example.deepspace，而不是com.example.deepSpace或com.example.deep_space。</p>
+<h2 id="3-Class类命名：驼峰"><a href="#3-Class类命名：驼峰" class="headerlink" title="3.Class类命名：驼峰"></a>3.Class类命名：驼峰</h2><p>UpperCamelCase，通常使用名词和短语。<br>测试类的名称以测试的类名称开头，以Test结尾。 例如，HashTest或HashIntegrationTest。</p>
+<h2 id="4-Method命名：驼峰"><a href="#4-Method命名：驼峰" class="headerlink" title="4.Method命名：驼峰"></a>4.Method命名：驼峰</h2><p>lowerCamelCase。</p>
+<h2 id="5-常量命名：大写"><a href="#5-常量命名：大写" class="headerlink" title="5.常量命名：大写"></a>5.常量命名：大写</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Constants</span><br><span class="line">static final int NUMBER &#x3D; 5;</span><br><span class="line">static final ImmutableList&lt;String&gt; NAMES &#x3D; ImmutableList.of(&quot;Ed&quot;, &quot;Ann&quot;);</span><br><span class="line">static final Joiner COMMA_JOINER &#x3D; Joiner.on(&#39;,&#39;);  &#x2F;&#x2F; because Joiner is immutable</span><br><span class="line">static final SomeMutableType[] EMPTY_ARRAY &#x3D; &#123;&#125;;</span><br><span class="line">enum SomeEnum &#123; ENUM_CONSTANT &#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Not constants</span><br><span class="line">static String nonFinal &#x3D; &quot;non-final&quot;;</span><br><span class="line">final String nonStatic &#x3D; &quot;non-static&quot;;</span><br><span class="line">static final Set&lt;String&gt; mutableCollection &#x3D; new HashSet&lt;String&gt;();</span><br><span class="line">static final ImmutableSet&lt;SomeMutableType&gt; mutableElements &#x3D; ImmutableSet.of(mutable);</span><br><span class="line">static final Logger logger &#x3D; Logger.getLogger(MyClass.getName());</span><br><span class="line">static final String[] nonEmptyArray &#x3D; &#123;&quot;these&quot;, &quot;can&quot;, &quot;change&quot;&#125;;</span><br></pre></td></tr></table></figure>
+<p>需要分辨什么是不可改变的常量。</p>
+<h2 id="6-驼峰命名："><a href="#6-驼峰命名：" class="headerlink" title="6.驼峰命名："></a>6.驼峰命名：</h2><p>基本都是驼峰命名规则，后序不再赘述。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java%E5%9F%BA%E7%A1%80/" rel="tag"># Java基础</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/17/%E5%8D%8E%E4%B8%BA%E6%A0%A1%E6%8B%9B-%E9%80%9A%E7%94%A8%E8%BD%AF%E5%BC%80-8%E6%9C%8812%E6%97%A5-%E7%AC%94%E8%AF%95/" rel="prev" title="华为校招 - 通用软开 8月12日 笔试">
+      <i class="fa fa-chevron-left"></i> 华为校招 - 通用软开 8月12日 笔试
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、字符"><span class="nav-number">1.</span> <span class="nav-text">一、字符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-空格：ASCII-（0x20）"><span class="nav-number">1.1.</span> <span class="nav-text">1.空格：ASCII （0x20）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-转义序列：-b-t-n-f-r-quot-39-and"><span class="nav-number">1.2.</span> <span class="nav-text">2.转义序列：(\b, \t, \n, \f, \r, &quot;, &#39; and \)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-其他："><span class="nav-number">1.3.</span> <span class="nav-text">3.其他：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、资源文件"><span class="nav-number">2.</span> <span class="nav-text">二、资源文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-版权许可：不可省略"><span class="nav-number">2.1.</span> <span class="nav-text">1.版权许可：不可省略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Package语句："><span class="nav-number">2.2.</span> <span class="nav-text">2.Package语句：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-导包："><span class="nav-number">2.3.</span> <span class="nav-text">3.导包：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-顺序：ASCII排序顺序"><span class="nav-number">2.4.</span> <span class="nav-text">4.顺序：ASCII排序顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Class声明："><span class="nav-number">2.5.</span> <span class="nav-text">5.Class声明：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-构造方法重载："><span class="nav-number">2.6.</span> <span class="nav-text">6.构造方法重载：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、格式"><span class="nav-number">3.</span> <span class="nav-text">三、格式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-大括号（代码块）：不可省略"><span class="nav-number">3.1.</span> <span class="nav-text">1.大括号（代码块）：不可省略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-缩进：两个空格"><span class="nav-number">3.2.</span> <span class="nav-text">2.缩进：两个空格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-语句："><span class="nav-number">3.3.</span> <span class="nav-text">3.语句：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-换行位置："><span class="nav-number">3.4.</span> <span class="nav-text">4.换行位置：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-空白："><span class="nav-number">3.5.</span> <span class="nav-text">5.空白：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-分组括号："><span class="nav-number">3.6.</span> <span class="nav-text">6.分组括号：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-变量声明："><span class="nav-number">3.7.</span> <span class="nav-text">7.变量声明：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-修饰符顺序："><span class="nav-number">3.8.</span> <span class="nav-text">9.修饰符顺序：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-数字文字："><span class="nav-number">3.9.</span> <span class="nav-text">10.数字文字：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、命名"><span class="nav-number">4.</span> <span class="nav-text">四、命名</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-减少下划线：-name-mName-s-name-and-kName-禁止。"><span class="nav-number">4.1.</span> <span class="nav-text">1.减少下划线： name_, mName, s_name and kName,禁止。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-包命名："><span class="nav-number">4.2.</span> <span class="nav-text">2.包命名：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Class类命名：驼峰"><span class="nav-number">4.3.</span> <span class="nav-text">3.Class类命名：驼峰</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Method命名：驼峰"><span class="nav-number">4.4.</span> <span class="nav-text">4.Method命名：驼峰</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-常量命名：大写"><span class="nav-number">4.5.</span> <span class="nav-text">5.常量命名：大写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-驼峰命名："><span class="nav-number">4.6.</span> <span class="nav-text">6.驼峰命名：</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">AlexLJS</p>
+  <div class="site-description" itemprop="description">个人博客，用于分享Web开发的学习笔记和一些碎碎念。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AlexLJS</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'XVYaOQpDVtyf9vS7gyGWKM50-gzGzoHsz',
+      appKey     : 'tNz39ks5A6xit3uRDjDHC7ci',
+      placeholder: "(*^__^*) 嘻嘻……",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
